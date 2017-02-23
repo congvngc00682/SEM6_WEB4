@@ -40,7 +40,6 @@ create table Evidence
 (
 	id int primary key identity(1,1) not null,
 	files varchar(200) null,
+	evidence_date datetime,
 	account int Foreign key references Account(id)
 )go
-
-create table 

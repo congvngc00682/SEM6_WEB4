@@ -11,6 +11,7 @@ create table Account
 	[password] varchar(50) not null,
 	email varchar(50),
 	[role] int not null,
+	faculty int Foreign key references Faculty(id)
 )
 go
 
@@ -20,7 +21,7 @@ create table Faculty
 (
 	id int primary key identity(1,1) not null,
 	name varchar(50) not null,
-	account int Foreign key references Account(id) 
+	 
 )
 go
 
@@ -42,4 +43,5 @@ create table Evidence
 	files varchar(200) null,
 	evidence_date datetime,
 	account int Foreign key references Account(id)
-)go
+)
+go

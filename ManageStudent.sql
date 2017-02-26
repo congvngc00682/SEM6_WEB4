@@ -4,6 +4,14 @@ go
 use ManageStudent
 go
 
+create table Faculty
+(
+	id int primary key identity(1,1) not null,
+	name varchar(50) not null,
+	 
+)
+go
+
 create table Account
 (
 	id int primary key identity(1,1) not null,
@@ -12,16 +20,6 @@ create table Account
 	email varchar(50),
 	[role] int not null,
 	faculty int Foreign key references Faculty(id)
-)
-go
-
-
-
-create table Faculty
-(
-	id int primary key identity(1,1) not null,
-	name varchar(50) not null,
-	 
 )
 go
 
@@ -45,3 +43,10 @@ create table Evidence
 	account int Foreign key references Account(id)
 )
 go
+
+
+insert into Faculty values('Information Technology')
+
+insert into Account values('Cong', '123', 'congvngc00682@fpt.edu.vn', 1, 1);
+
+select * from Account

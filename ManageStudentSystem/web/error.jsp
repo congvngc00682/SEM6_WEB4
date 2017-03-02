@@ -1,5 +1,5 @@
 <%-- 
-    Document   : Login
+    Document   : error
     Created on : Feb 28, 2017, 3:09:50 PM
     Author     : power
 --%>
@@ -19,15 +19,8 @@
             </div>
 
             <div class="container">
-                <label><b>Username</b></label>
-                <input type="text" placeholder="Enter Username" name="uname" required>
-
-                <label><b>Password</b></label>
-                <input type="password" placeholder="Enter Password" name="psw" required>
-
-                <button type="submit">Login</button>
-                <input type="checkbox" checked="checked"> Remember me
-                <span class="psw">Forgot <a href="#">password?</a></span>
+                <h5>Username and password not correct!</h5>
+                <h5>Click <a href="Login.jsp">here</a> to login again !</h5>
             </div>
 
         </form>

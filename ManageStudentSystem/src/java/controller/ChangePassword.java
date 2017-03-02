@@ -5,6 +5,7 @@
  */
 package controller;
 
+import entities.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -38,8 +39,15 @@ public class ChangePassword extends HttpServlet {
         String newPw = request.getParameter("newPassword");
         String cfmPw = request.getParameter("confirmPassword");
         DataProcess dp = new DataProcess();
-        dp.updatePassword(cfmPw, email);
-        response.sendRedirect("ChangePasswordResult.jsp");
+        boolean check;
+        
+        check = dp.updatePassword(cfmPw, email);
+        if(check==true){
+            response.sendRedirect("ChangePasswordResult.jsp");
+        }else{
+            response.sendRedirect("error.jsp");
+        }
+        
         
     }
     

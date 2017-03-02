@@ -6,13 +6,11 @@
 package model;
 
 import entities.Account;
-import entities.Faculty;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class DataProcess {
 
-    public Connection getConnection() {
+    public static Connection getConnection() {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -100,6 +98,22 @@ public class DataProcess {
         return true;
     }
 
+    public boolean updatePassword(String password, String email){
+        String sql = "Update Account set [password]=? where email=?";
+        try{
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, password);
+            ps.setString(2, email);
+            ps.executeUpdate();
+        }catch(Exception ex){
+            
+        }
+        return false;
+    }
+
     
+    
+    
+     
 
 }

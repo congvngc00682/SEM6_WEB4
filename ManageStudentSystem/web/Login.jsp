@@ -27,7 +27,7 @@
 
                 <button type="submit">Login</button>
                 <input type="checkbox" checked="checked"> Remember me
-                <span class="psw">Forgot <a href="#">password?</a></span>
+                <span class="psw">Forgot <a href="ResetPassword.jsp">password?</a></span>
             </div>
 
         </form>

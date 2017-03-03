@@ -3,19 +3,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Reset Password</title>
+        <title>Reset Password Result</title>
         <link href="css/login.css" rel="stylesheet">
     </head>
     <body>
-        <form action="ResetPassword">
+        <form action="">
             <div class="imgcontainer">
                 <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
             </div>
 
             <div class="container">
-                <label><b>Please enter your email:</b></label>
-                <input type="text" placeholder="Email" name="email" required="true">
-                <button type="submit">Submit</button>
+                <b>Your password has been reset and sent to your email</b>
+                <p>Back to <a href="Login.jsp">Login</a>
+                </p>
+                
             </div>
 
         </form>

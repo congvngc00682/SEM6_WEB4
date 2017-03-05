@@ -27,6 +27,38 @@
                     modal.style.display = "none";
                 }
             }
+
+            function validateForm() {
+                if (!validateRequiredField()) {
+                    document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
+                    return false;
+                } else if (!validateEmail(email)) {
+                    document.getElementById("emailError").innerHTML = "Invalid email format";
+                    return false;
+                }
+
+                document.getElementById("emailError").innerHTML = "";
+                document.getElementById("addNewAccountForm").submit();
+                return true;
+            }
+
+            function validateRequiredField() {
+                var role = document.getElementById("role").value;
+                var faculty = document.getElementById("faculty").value;
+                var firstname = document.getElementById("firstname").value;
+                var lastname = document.getElementById("lastname").value;
+                var email = document.getElementById("email").value;
+                if ((!role || !faculty || !firstname || !lastname || !email)) {
+                    return false;
+                }
+                return true;
+            }
+
+            function validateEmail() {
+                var email = document.getElementById("email").value;
+                var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                return email_regex.test(email);
+            }
         </script>
     </head>
     <body>
@@ -41,90 +73,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">SB Admin</a>
+                    <a class="navbar-brand" href="AdminManager.jsp">Administrator</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu message-dropdown">
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-preview">
-                                <a href="#">
-                                    <div class="media">
-                                        <span class="pull-left">
-                                            <img class="media-object" src="http://placehold.it/50x50" alt="">
-                                        </span>
-                                        <div class="media-body">
-                                            <h5 class="media-heading"><strong>John Smith</strong>
-                                            </h5>
-                                            <p class="small text-muted"><i class="fa fa-clock-o"></i> Yesterday at 4:32 PM</p>
-                                            <p>Lorem ipsum dolor sit amet, consectetur...</p>
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="message-footer">
-                                <a href="#">Read All New Messages</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i> <b class="caret"></b></a>
-                        <ul class="dropdown-menu alert-dropdown">
-                            <li>
-                                <a href="#">Alert Name <span class="label label-default">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-primary">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-success">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-info">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-warning">Alert Badge</span></a>
-                            </li>
-                            <li>
-                                <a href="#">Alert Name <span class="label label-danger">Alert Badge</span></a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#">View All</a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
                         <ul class="dropdown-menu">
@@ -159,36 +111,11 @@
                         <li>
                             <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                         </li>
-                        <li>
-                            <a href="forms.html"><i class="fa fa-fw fa-edit"></i> Forms</a>
-                        </li>
-                        <li>
-                            <a href="bootstrap-elements.html"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
-                        </li>
-                        <li>
-                            <a href="bootstrap-grid.html"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
-                        </li>
-                        <li>
-                            <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Dropdown <i class="fa fa-fw fa-caret-down"></i></a>
-                            <ul id="demo" class="collapse">
-                                <li>
-                                    <a href="#">Dropdown Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Dropdown Item</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="blank-page.html"><i class="fa fa-fw fa-file"></i> Blank Page</a>
-                        </li>
-                        <li>
-                            <a href="index-rtl.html"><i class="fa fa-fw fa-dashboard"></i> RTL Dashboard</a>
-                        </li>
                     </ul>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
+
 
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -204,13 +131,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <form action="AddNewAccount">
+                                <form id="addNewAccountForm" action="AddNewAccount" method="POST">
                                     <table class="table">
                                         <tr>
-                                            <td>Role:
+                                            <td>Role:*
                                             </td>
-                                            <td><select name="role" required="true">
-                                                    <option value="">...</option>
+                                            <td><select name="role" id="role" required="true" placeholder="Select role">
+                                                    <option value="">---Select role---</option>
                                                     <option value="1">Admin</option>
                                                     <option value="2">EC Manager</option>
                                                     <option value="3">EC Coordinator</option>
@@ -219,21 +146,20 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Faculty:
+                                            <td>Faculty:*
                                             </td>
                                             <td>
-                                                <select name="faculty" required="true">
-                                                    <option value="">...</option>
+                                                <select name="faculty" id="faculty" required="true">
+                                                    <option value="">---Select faculty---</option>
                                                     <option value="1">Faculty 1</option>
                                                     <option value="2">Faculty 2</option>
                                                 </select>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Firstname:
-
+                                            <td>Firstname:*
                                             </td>
-                                            <td> <input type="text" name="firstname" required="true"/>
+                                            <td> <input type="text" id="firstname" name="firstname" required="true"/>
                                             </td>
                                         </tr>
                                         <tr>
@@ -243,28 +169,30 @@
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Lastname: 
+                                            <td>Lastname:*
                                             </td>
-                                            <td><input type="text" name="lastname" required="true"/>
+                                            <td><input type="text" name="lastname" id="lastname" required="true"/>
                                             </td>
                                         </tr>
 
                                         <tr>
-                                            <td>Email: 
+                                            <td>Email:* 
                                             </td>
-                                            <td><input type="text" id="email" name="email" onblur="validateEmail(this.value)" required="true"/> <label id="emailError" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><button type="submit" onsubmit="return validateEmail(document.getElementById('email').value);">Create Account</button>
+                                            <td><input type="text" id="email" name="email" onblur="validateEmail(this.value)" required="true" placeholder="example@email.com"/> 
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>
                                             </td>
                                             <td>
+                                                <button type="button" onclick="return validateForm();">Create Account</button>
+                                                <button type="reset">Reset</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td><label id="emailError" style="color: red;"/>
                                             </td>
                                         </tr>
                                     </table>
@@ -273,35 +201,24 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                <!-- /.container-fluid -->
+                    <!-- /.container-fluid -->
+                </div>
+                <!-- /#page-wrapper -->
             </div>
-            <!-- /#page-wrapper -->
-        </div>
-        <!-- /#wrapper -->
+            <!-- /#wrapper -->
 
-        <!-- jQuery -->
-        <script src="js/jquery.js"></script>
+            <!-- jQuery -->
+            <script src="js/jquery.js"></script>
 
-        <!-- Bootstrap Core JavaScript -->
-        <script src="js/bootstrap.min.js"></script>
+            <!-- Bootstrap Core JavaScript -->
+            <script src="js/bootstrap.min.js"></script>
 
-        <!-- Morris Charts JavaScript -->
-        <script src="js/plugins/morris/raphael.min.js"></script>
-        <script src="js/plugins/morris/morris.min.js"></script>
-        <script src="js/plugins/morris/morris-data.js"></script>
+            <!-- Morris Charts JavaScript -->
+            <script src="js/plugins/morris/raphael.min.js"></script>
+            <script src="js/plugins/morris/morris.min.js"></script>
+            <script src="js/plugins/morris/morris-data.js"></script>
 
-        <script type="text/javascript">
-            function validateEmail(email) {
-                //alert("sdfsd");
-                var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-                if (!email_regex.test(email)) {
-                    document.getElementById('emailError').innerHTML = "invalid email";
-                    return false;
-                } else {
-                    document.getElementById('emailError').innerHTML = "";
-                    return true;
-                }
-            }
-        </script>
+
     </body>
+
 </html>

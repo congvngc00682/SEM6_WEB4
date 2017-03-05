@@ -1,9 +1,3 @@
-<%-- 
-    Document   : Login
-    Created on : Feb 28, 2017, 3:09:50 PM
-    Author     : power
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,12 +15,12 @@
             <div class="container">
                 <label><b>Username</b></label>
                 <input type="text" placeholder="Enter Username" name="uname" required>
-
+                
                 <label><b>Password</b></label>
                 <input type="password" placeholder="Enter Password" name="psw" required>
 
                 <button type="submit">Login</button>
-                <input type="checkbox" checked="checked"> Remember me
+                <a href="ChangePassword.jsp">Change password</a>
                 <span class="psw">Forgot <a href="ResetPassword.jsp">password?</a></span>
             </div>
 

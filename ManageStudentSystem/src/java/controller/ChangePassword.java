@@ -40,18 +40,15 @@ public class ChangePassword extends HttpServlet {
         String cfmPw = request.getParameter("confirmPassword");
         DataProcess dp = new DataProcess();
         boolean check;
-        
+
         check = dp.updatePassword(cfmPw, email);
-        if(check==true){
-            response.sendRedirect("ChangePasswordResult.jsp");
-        }else{
-            response.sendRedirect("error.jsp");
+        if (check == true) {
+            request.setAttribute("result", "success");
+        } else {
+            request.setAttribute("result", "failed");
         }
-        
-        
+        request.getRequestDispatcher("ChangePasswordResult.jsp").forward(request, response);
     }
-    
-    
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**

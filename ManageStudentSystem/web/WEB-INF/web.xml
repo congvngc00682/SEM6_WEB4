@@ -4,9 +4,49 @@
         <servlet-name>MyServlet</servlet-name>
         <servlet-class>controller.MyServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadFile</servlet-name>
+        <servlet-class>controller.UploadFile</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ViewEC</servlet-name>
+        <servlet-class>controller.ViewEC</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateEC</servlet-name>
+        <servlet-class>controller.UpdateEC</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoadEC</servlet-name>
+        <servlet-class>controller.LoadEC</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AddExtenuatingCircumstance</servlet-name>
+        <servlet-class>controller.AddExtenuatingCircumstance</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MyServlet</servlet-name>
         <url-pattern>/MyServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UploadFile</servlet-name>
+        <url-pattern>/UploadFile</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ViewEC</servlet-name>
+        <url-pattern>/ViewEC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateEC</servlet-name>
+        <url-pattern>/UpdateEC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>LoadEC</servlet-name>
+        <url-pattern>/LoadEC</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddExtenuatingCircumstance</servlet-name>
+        <url-pattern>/AddExtenuatingCircumstance</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

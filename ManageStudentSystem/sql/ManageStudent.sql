@@ -58,6 +58,7 @@ create table ExtenuatingCircumstance
 )
 go
 
+
 create table Evidence
 (
 	id int primary key identity(1,1) not null,
@@ -75,8 +76,12 @@ insert into [Role] values ('Admin')
 insert into [Role] values ('EC Manager')
 insert into [Role] values ('EC Coordinator')
 insert into [Role] values ('Student')
+delete from account
 
 insert into Account values('Admin', '123', 'wsadGroup@gmail.com', 1, 1);
 insert into Account values('Cong', '123', 'congvngc00682@fpt.edu.vn', 1, 1);
+
+select * from Account
+insert into ExtenuatingCircumstance values('Feedback', 'Class', '10/3/2017', 'done', '12/3/2017', 1,2);
 
 

@@ -5,8 +5,8 @@
  */
 package controller;
 
-import entities.Evidence;
-import entities.ExtenuatingCircumstance;
+import entities.Faculty;
+import entities.Role;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,15 +18,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EvidenceDAO;
-import model.ExtenuatingCircumstanceDAO;
+import model.FacultyDAO;
+import model.RoleDAO;
 
 /**
  *
  * @author f87
  */
-@WebServlet(name = "ViewEC", urlPatterns = {"/ViewEC"})
-public class ViewEC extends HttpServlet {
+@WebServlet(name = "RoleServlet", urlPatterns = {"/prepare"})
+public class RoleServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,16 +41,15 @@ public class ViewEC extends HttpServlet {
             throws ServletException, IOException {
         try {
             response.setContentType("text/html;charset=UTF-8");
-            int ecId = Integer.parseInt(request.getParameter("id"));
-            ExtenuatingCircumstance ec = new ExtenuatingCircumstanceDAO().retrieveECById(ecId);
-            ArrayList<Evidence> evidences = new EvidenceDAO().retrieveEvidenceByEcId(ecId);
+            ArrayList<Role> roles = new RoleDAO().retrieveRoles();
+            request.setAttribute("roles", roles);
             
-            request.setAttribute("ec", ec);
-            request.setAttribute("evidences", evidences);
-            request.setAttribute("role", request.getParameter("role"));
-            request.getRequestDispatcher("ViewECDetail.jsp").forward(request, response);
+            ArrayList<Faculty> faculties = new FacultyDAO().retrieveFaculties();
+            request.setAttribute("faculties", faculties);
+            
+            request.getRequestDispatcher("AddNewAccount.jsp").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewEC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoleServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

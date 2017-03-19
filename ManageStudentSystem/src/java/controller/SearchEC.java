@@ -5,10 +5,12 @@
  */
 package controller;
 
-import entities.Evidence;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
 import entities.ExtenuatingCircumstance;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -18,15 +20,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EvidenceDAO;
 import model.ExtenuatingCircumstanceDAO;
 
 /**
  *
  * @author f87
  */
-@WebServlet(name = "ViewEC", urlPatterns = {"/ViewEC"})
-public class ViewEC extends HttpServlet {
+@WebServlet(name = "SearchEC", urlPatterns = {"/SearchEC"})
+public class SearchEC extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,16 +42,23 @@ public class ViewEC extends HttpServlet {
             throws ServletException, IOException {
         try {
             response.setContentType("text/html;charset=UTF-8");
-            int ecId = Integer.parseInt(request.getParameter("id"));
-            ExtenuatingCircumstance ec = new ExtenuatingCircumstanceDAO().retrieveECById(ecId);
-            ArrayList<Evidence> evidences = new EvidenceDAO().retrieveEvidenceByEcId(ecId);
+            int faculty = Integer.parseInt(request.getParameter("faculty"));
+            String title = request.getParameter("title");
+            String submittedBy = request.getParameter("studentName");
+            String assignedTo = request.getParameter("coordinatorName");
+            String submitDate = request.getParameter("submittedDate");
+            String status = request.getParameter("status");
+            System.out.println("title: " + title + "-submitted: " + submittedBy + "-assign: " + assignedTo + "-date: " + submitDate + "-status: "+ status);
             
-            request.setAttribute("ec", ec);
-            request.setAttribute("evidences", evidences);
-            request.setAttribute("role", request.getParameter("role"));
-            request.getRequestDispatcher("ViewECDetail.jsp").forward(request, response);
+            ArrayList<ExtenuatingCircumstance> ecs = new ExtenuatingCircumstanceDAO().retrieveECsByCriteria(faculty, title, submittedBy, assignedTo, submitDate, status);
+            Gson gson = new Gson();
+            JsonElement jElement = gson.toJsonTree(ecs, new TypeToken<ArrayList<ExtenuatingCircumstance>>(){}.getType());
+            JsonArray jArray = jElement.getAsJsonArray();
+            System.out.println("json" + jArray.toString());
+            response.setContentType("application/json");
+            response.getWriter().print(jArray);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewEC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchEC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

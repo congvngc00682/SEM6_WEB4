@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,10 +35,11 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
  *
  * @author power
  */
+@WebServlet(name = "UploadFile", urlPatterns = {"/UploadFile"})
 public class UploadFile extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private final String Upload_Directory = "E:\\SEM6\\EnterPrise-Mr.Tung\\Project\\TestSaveFile\\src\\java\\FileName";
+    private final String Upload_Directory = "E:/UploadFolder";
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -57,41 +59,39 @@ public class UploadFile extends HttpServlet {
         Date today = Calendar.getInstance().getTime();
         String reportDate = df.format(today);
 
-        
-            if (ServletFileUpload.isMultipartContent(request)) {
-                try {
-                    String fname = null;
-                    String fsize = null;
-                    String ftype = null;
-                    List<FileItem> multiparts = new ServletFileUpload(
-                            new DiskFileItemFactory()).parseRequest(request);
-                    for (FileItem item : multiparts) {
-                        if (!item.isFormField()) {
-                            fname = new File(item.getName()).getName();
-                            fsize = new Long(item.getSize()).toString();
-                            ftype = item.getContentType();
-                            item.write(new File(Upload_Directory + File.separator
-                                    + fname));
-                        }
+        if (ServletFileUpload.isMultipartContent(request)) {
+            try {
+                String fname = null;
+                String fsize = null;
+                String ftype = null;
+                List<FileItem> multiparts = new ServletFileUpload(
+                        new DiskFileItemFactory()).parseRequest(request);
+                for (FileItem item : multiparts) {
+                    if (!item.isFormField()) {
+                        fname = new File(item.getName()).getName();
+                        fsize = new Long(item.getSize()).toString();
+                        ftype = item.getContentType();
+                        String destination = Upload_Directory + File.separator + fname;
+                        System.out.println("destination: " + destination);
+                        item.write(new File(destination));
                     }
-                    // File uploaded successfully
-                    request.setAttribute("message", "File Uploaded Successfully");
-                    
-                    request.setAttribute("size", fsize);
-                    request.setAttribute("type", ftype);
-                    DataProcess db = new DataProcess();
-                    db.getEvidence(reportDate, fname, 1);
-                    request.setAttribute("name", Upload_Directory + fname);
-                } catch (Exception e) {
                 }
-            } else {
-                request.setAttribute("message",
-                        "Sorry this Servlet only handles file upload request");
+                // File uploaded successfully
+                request.setAttribute("message", "File Uploaded Successfully");
+
+                request.setAttribute("size", fsize);
+                request.setAttribute("type", ftype);
+
+                request.setAttribute("name", Upload_Directory + File.separator + fname);
+            } catch (Exception e) {
             }
+        } else {
+            request.setAttribute("message",
+                    "Sorry this Servlet only handles file upload request");
+        }
 
-            request.getRequestDispatcher("/result.jsp").forward(request, response);
+        request.getRequestDispatcher("/result.jsp").forward(request, response);
 
-        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -5,28 +5,20 @@
  */
 package controller;
 
-import entities.Evidence;
-import entities.ExtenuatingCircumstance;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EvidenceDAO;
-import model.ExtenuatingCircumstanceDAO;
 
 /**
  *
  * @author f87
  */
-@WebServlet(name = "ViewEC", urlPatterns = {"/ViewEC"})
-public class ViewEC extends HttpServlet {
+@WebServlet(name = "Upload", urlPatterns = {"/Upload"})
+public class Upload extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,18 +31,18 @@ public class ViewEC extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            response.setContentType("text/html;charset=UTF-8");
-            int ecId = Integer.parseInt(request.getParameter("id"));
-            ExtenuatingCircumstance ec = new ExtenuatingCircumstanceDAO().retrieveECById(ecId);
-            ArrayList<Evidence> evidences = new EvidenceDAO().retrieveEvidenceByEcId(ecId);
-            
-            request.setAttribute("ec", ec);
-            request.setAttribute("evidences", evidences);
-            request.setAttribute("role", request.getParameter("role"));
-            request.getRequestDispatcher("ViewECDetail.jsp").forward(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(ViewEC.class.getName()).log(Level.SEVERE, null, ex);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet Upload</title>");            
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet Upload at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

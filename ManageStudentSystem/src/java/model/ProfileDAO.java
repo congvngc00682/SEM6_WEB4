@@ -18,10 +18,10 @@ import entities.Profile;
 public class ProfileDAO {
 
 	public static void insertProfile(Profile account) throws SQLException {
-		String SQL_INSERT = "insert into Profile(firstname,middlename,lastname,dob,accountId) values(?,?,?,?,?)";
+		String sqlQuery = "insert into Profile(firstname,middlename,lastname,dob,accountId) values(?,?,?,?,?)";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 
 		statement.setString(1, account.getFirstname());
 		statement.setString(2, account.getMiddlename());
@@ -45,10 +45,10 @@ public class ProfileDAO {
 	}
 
 	public static boolean checkExistingProfile(Profile p) throws SQLException {
-		String SQL_INSERT = "select count(1) from [profile] where firstname=? and middlename=? and lastname=? and dob=?;";
+		String sqlQuery = "select count(1) from [profile] where firstname=? and middlename=? and lastname=? and dob=?;";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, p.getFirstname());
 		statement.setString(2, p.getMiddlename());
 		statement.setString(3, p.getLastname());
@@ -66,10 +66,10 @@ public class ProfileDAO {
 	}
 
 	public static boolean checkExistingProfileByName(Profile p) throws SQLException {
-		String SQL_INSERT = "select count(1) from [profile] where firstname=? and middlename=? and lastname=? ;";
+		String sqlQuery = "select count(1) from [profile] where firstname=? and middlename=? and lastname=? ;";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, p.getFirstname());
 		statement.setString(2, p.getMiddlename());
 		statement.setString(3, p.getLastname());
@@ -85,21 +85,4 @@ public class ProfileDAO {
 		}
 	}
 
-	public static void main(String[] args) {
-		Profile p = new Profile();
-		p.setFirstname("Cuong");
-		p.setMiddlename("Hung");
-		p.setLastname("Dao1");
-		p.setDob("22/06/1984");
-		p.setAccountId(4);
-
-		try {
-			 insertProfile(p);
-			boolean check = checkExistingProfile(p);
-			System.out.println("exist?: " + check);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-	}
 }

@@ -6,14 +6,21 @@
 package controller;
 
 import entities.Account;
+import entities.ExtenuatingCircumstance;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import model.DataProcess;
+import model.ExtenuatingCircumstanceDAO;
 
 /**
  *
@@ -32,7 +39,7 @@ public class Login extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("uname");
         String password = request.getParameter("psw");
@@ -41,18 +48,11 @@ public class Login extends HttpServlet {
         if(account.getId()==0){
             response.sendRedirect("error.jsp");
         }else{
-            if(account.getRole()==1){
-                response.sendRedirect("AdminManager.jsp");
-            }
-            if(account.getRole()==2){
-                response.sendRedirect("ECManager.jsp");
-            }
-            if(account.getRole()==3){
-                response.sendRedirect("ECCoordinatorManager.jsp");
-            }
-            if(account.getRole()==4){
-                response.sendRedirect("StudentManager.jsp");
-            }
+            HttpSession session = request.getSession(false);
+           
+            session.setAttribute("account", account);
+            
+            request.getRequestDispatcher("Dashboard").forward(request, response);
         }
         
         
@@ -72,7 +72,11 @@ public class Login extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -86,7 +90,11 @@ public class Login extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (SQLException ex) {
+            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**

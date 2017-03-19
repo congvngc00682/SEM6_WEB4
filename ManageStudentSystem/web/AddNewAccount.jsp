@@ -1,4 +1,6 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -35,7 +37,11 @@
                 } else if (!validateEmail(email)) {
                     document.getElementById("emailError").innerHTML = "Invalid email format";
                     return false;
-                }
+                } 
+//                else if (checkExitingEmail()) {
+//                    document.getElementById("emailError").innerHTML = "This email is aready existed";
+//                    return false;
+//                }
 
                 document.getElementById("emailError").innerHTML = "";
                 document.getElementById("addNewAccountForm").submit();
@@ -78,7 +84,7 @@
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -91,7 +97,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="Login.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
                     </li>
@@ -100,7 +106,7 @@
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
                     <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="AdminManager.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
@@ -138,10 +144,9 @@
                                             </td>
                                             <td><select name="role" id="role" required="true" placeholder="Select role">
                                                     <option value="">---Select role---</option>
-                                                    <option value="1">Admin</option>
-                                                    <option value="2">EC Manager</option>
-                                                    <option value="3">EC Coordinator</option>
-                                                    <option value="4">Student</option>
+                                                    <c:forEach items="${roles}" var="role">
+                                                        <option value="${role.roleId}">${role.role}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </td>
                                         </tr>
@@ -151,8 +156,9 @@
                                             <td>
                                                 <select name="faculty" id="faculty" required="true">
                                                     <option value="">---Select faculty---</option>
-                                                    <option value="1">Faculty 1</option>
-                                                    <option value="2">Faculty 2</option>
+                                                    <c:forEach items="${faculties}" var="faculty">
+                                                        <option value="${faculty.id}">${faculty.facultyName}</option>
+                                                    </c:forEach>
                                                 </select>
                                             </td>
                                         </tr>

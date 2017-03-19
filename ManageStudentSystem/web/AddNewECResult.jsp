@@ -72,7 +72,7 @@
                             <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
+                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
                         <li>
                             <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
@@ -91,7 +91,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Add new account result
+                                Add new EC result
                             </h1>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="alert alert-info alert-dismissable">
-                                <i class="fa fa-info-circle"></i> <strong>New account has been created successfully!</strong> 
+                                <i class="fa fa-info-circle"></i> <strong>New EC has been submitted successfully!</strong> 
                             </div>
                         </div>
                     </div>

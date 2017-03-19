@@ -17,30 +17,30 @@ public class ExtenuatingCircumstance {
     private String description;
     private String submitted_date;
     private String process_status;
-    private String processed_date;
     private int account;
-    private int assignedCoordinator;
-    private List<ExtenuatingCircumstance> list;
+    private String processedDate;
+    private int assignedCoordinatorId;
+    private String coordinatorName;
+    private String studentName;
+    private int noOfEvidence;
 
-    public ExtenuatingCircumstance(String title, String description, String submitted_date, String process_status, String processed_date, int account, int assignedCoordinator) {
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+    private List<ExtenuatingCircumstance> extenuatingCircumstances; 
+
+    
+    public ExtenuatingCircumstance(String title, String description, String submitted_date, String process_status, int account) {
         this.title = title;
         this.description = description;
         this.submitted_date = submitted_date;
         this.process_status = process_status;
-        this.processed_date = processed_date;
         this.account = account;
-        this.assignedCoordinator = assignedCoordinator;
     }
-
-    public List<ExtenuatingCircumstance> getList() {
-        return list;
-    }
-
-    public void setList(List<ExtenuatingCircumstance> list) {
-        this.list = list;
-    }
-
-    
 
     public ExtenuatingCircumstance() {
     }
@@ -51,22 +51,6 @@ public class ExtenuatingCircumstance {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getProcessed_date() {
-        return processed_date;
-    }
-
-    public void setProcessed_date(String processed_date) {
-        this.processed_date = processed_date;
-    }
-
-    public int getAssignedCoordinator() {
-        return assignedCoordinator;
-    }
-
-    public void setAssignedCoordinator(int assignedCoordinator) {
-        this.assignedCoordinator = assignedCoordinator;
     }
 
     public String getTitle() {
@@ -107,6 +91,45 @@ public class ExtenuatingCircumstance {
 
     public void setAccount(int account) {
         this.account = account;
+    }
+    
+    public String getProcessedDate() {
+        return processedDate;
+    }
+
+    public void setProcessedDate(String processedDate) {
+        this.processedDate = processedDate;
+    }
+
+    public int getAssignedCoordinatorId() {
+        return assignedCoordinatorId;
+    }
+
+    public void setAssignedCoordinatorId(int assignedCoordinatorid) {
+        this.assignedCoordinatorId = assignedCoordinatorid;
+    }
+    public String getCoordinatorName() {
+        return coordinatorName;
+    }
+
+    public void setCoordinatorName(String coordinatorName) {
+        this.coordinatorName = coordinatorName;
+    }
+
+    public int getNoOfEvidence() {
+        return noOfEvidence;
+    }
+
+    public void setNoOfEvidence(int noOfEvidence) {
+        this.noOfEvidence = noOfEvidence;
+    }
+
+    public List<ExtenuatingCircumstance> getExtenuatingCircumstances() {
+        return extenuatingCircumstances;
+    }
+
+    public void setExtenuatingCircumstances(List<ExtenuatingCircumstance> extenuatingCircumstances) {
+        this.extenuatingCircumstances = extenuatingCircumstances;
     }
     
 }

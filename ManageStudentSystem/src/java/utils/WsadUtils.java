@@ -1,5 +1,6 @@
 package utils;
 
+import entities.ExtenuatingCircumstance;
 import java.util.Random;
 
 public class WsadUtils {
@@ -71,4 +72,16 @@ public class WsadUtils {
 
 		return content.toString();
 	}
+        public static String buildMailContentForNewEC(ExtenuatingCircumstance ec) {
+            StringBuilder content = new StringBuilder();
+            content.append("<html>").append("<head></head>").append("<body>")
+				.append("<h3>You have been assigned to a new Extenuating Circumstance: </h3>")
+                                .append("<p><b>Title: </b>").append(ec.getTitle())
+                                .append("</p><b>Description: </b>").append(ec.getDescription())
+                                .append("<p/><p/><p>Please process it as soon as possible</p>")
+				.append("<p>Regards,</p><p>Admin</p>").append("</body>")
+				.append("<html>");
+            return content.toString();
+        }
+       
 }

@@ -11,10 +11,10 @@ package entities;
  */
 public class Faculty {
     private int id;
-    private String faculty_name;
+    private String facultyName;
 
-    public Faculty(String faculty_name) {
-        this.faculty_name = faculty_name;
+    public Faculty(String facultyName) {
+        this.facultyName = facultyName;
     }
 
     public Faculty() {
@@ -28,12 +28,12 @@ public class Faculty {
         this.id = id;
     }
 
-    public String getFaculty_name() {
-        return faculty_name;
+    public String getFacultyName() {
+        return facultyName;
     }
 
     public void setFaculty_name(String faculty_name) {
-        this.faculty_name = faculty_name;
+        this.facultyName = faculty_name;
     }
     
     

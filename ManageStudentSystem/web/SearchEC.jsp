@@ -1,7 +1,5 @@
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.Statement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page session="true" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,7 +19,49 @@
         <link href="css/modelLogin.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#tablediv").hide();
+                $("#btnSearch").click(function () {
+                    var faculty = $("#faculty").val();
+                    var title = $("#title").val();
+                    var studentName = $("#studentName").val();
+                    var coordinatorName = $("#coordinatorName").val();
+                    var submittedDate = $("#submittedDate").val();
+                    var status = $("#status").val();
+                    $.ajax({
+                        url: 'SearchEC?faculty='+faculty+'&title='+title+'&studentName='+studentName +'&coordinatorName='+coordinatorName+'&submittedDate='+submittedDate+ '&status='+status,
+                        dataType: "json",
+                        success: function (responseJson) {
+                            if (responseJson.length !== 0) {
+                                $("#countrytable").html("");
+                                var table1 = $("#countrytable");
+                                var th = $("<tr><th>Id</th><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Assigned To</th></tr>");
+                                th.appendTo(table1);
+                                
+                                $.each(responseJson, function (key, value) {
+                                    var rowNew = $("<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+                                    rowNew.children().eq(0).text(value['id']);
+                                    rowNew.children().eq(1).html("<a href='ViewEC?id=" + value['id'] +"'>"+ value['title'] + "</a>");
+                                    rowNew.children().eq(2).text(value['description']);
+                                    rowNew.children().eq(3).text(value['process_status']);
+                                    rowNew.children().eq(4).text(value['submitted_date']);
+                                    rowNew.children().eq(5).text(value['coordinatorName']);
+
+                                    rowNew.appendTo(table1);
+                                });
+                             } else {
+                                $("#countrytable").html("No Record found!");
+                            }
+                             $("#tablediv").show();          
+                        }
+                    }
+                    );
+                });
+            });
+
+        </script>
     </head>
     <body>
         <div id="wrapper">
@@ -68,10 +108,10 @@
                             <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
                         </li>
                         <li>
-                            <a href="ViewEC"><i class="fa fa-fw fa-bar-chart-o"></i> View EC</a>
+                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                         </li>
                         <li>
-                            <a href="LoadEC"><i class="fa fa-fw fa-table"></i> Load EC</a>
+                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                         </li>
                     </ul>
                 </div>
@@ -85,7 +125,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Update EC
+                                Search EC
                             </h1>
                         </div>
                     </div>
@@ -93,62 +133,76 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <form id="addNewAccountForm" action="UpdateEC" method="POST">
-
+                                <form id="searchECForm" action="" method="POST">
                                     <table class="table">
                                         <tr>
-                                            <td>ID:
+                                            <td>Faculty:
                                             </td>
                                             <td>
-                                                <input value="${ec.id}" id="id" name="id"/>
+                                                <select name="faculty" id="faculty">
+                                                    <option value="0" selected="true">---Select faculty---</option>
+                                                    <option value="1">FPT</option>
+                                                    <option value="2">Faculty 2</option>
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Title:
                                             </td>
-                                            <td>
-                                                <input value=" ${ec.title}" type="text" id="title" name="title" required="true"/>
+                                            <td> <input type="text" id="title" name="title"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Description:
+                                            <td>Submitted By:
                                             </td>
-                                            <td> 
-                                               <input value=" ${ec.description}"  type="text" id="description" name="description" required="true"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Submitted date: 
-                                            </td>
-                                            <td>
-                                                 <input value=" ${ec.submitted_date}"  type="text" id="submitteddate" name="submitteddate" required="true"/>
+                                            <td> <input type="text" id="studentName" name="studentName"/>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>Process status:
+                                            <td>Assigned To:
                                             </td>
-                                            <td>
-                                                 <input value=" ${ec.process_status}"  type="text" id="processstatus" name="processstatus" required="true"/>
+                                            <td><input type="text" name="coordinatorName" id="coordinatorName"/>
                                             </td>
                                         </tr>
-
                                         <tr>
-                                            <td>Account id:
+                                            <td>Submitted Date:
                                             </td>
-                                            <td>
-                                                 ${ec.account}
+                                            <td><input type="text" name="submittedDate" id="submittedDate" />
                                             </td>
                                         </tr>
-                                         <tr>
+                                        <tr>
+                                            <td>Status:
+                                            </td>
+                                            <td>
+                                                <select name="status" id="status">
+                                                    <option value="">---Select status---</option>
+                                                    <option value="submitted">submitted</option>
+                                                    <option value="accepted">accepted</option>
+                                                    <option value="rejected">rejected</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>
                                             </td>
-                                            
                                             <td>
-                                                <button type="submit" >Update</button>
+                                                <button type="button" id="btnSearch">Search</button>
                                                 <button type="reset">Reset</button>
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td><label id="emailError" style="color: red;"/>
+                                            </td>
+                                        </tr>
                                     </table>
+
+                                    <div id="tablediv">
+                                        <table cellspacing="0" id="countrytable" class="table"> 
+                                        </table>
+                                    </div>
+
                                 </form>
                             </div>
                         </div>

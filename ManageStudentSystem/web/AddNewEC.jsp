@@ -1,5 +1,6 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -8,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Add New Account</title>
+        <title>Add New EC</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -30,16 +31,19 @@
             }
 
             function validateForm() {
-                if (!validateRequiredField()) {
-                    document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
-                    return false;
-                } else if (!validateEmail(email)) {
-                    document.getElementById("emailError").innerHTML = "Invalid email format";
-                    return false;
-                }
-
-                document.getElementById("emailError").innerHTML = "";
-                document.getElementById("addNewAccountForm").submit();
+//                if (!validateRequiredField()) {
+//                    document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
+//                    return false;
+//                } else if (!validateEmail(email)) {
+//                    document.getElementById("lblError").innerHTML = "Invalid email format";
+//                    return false;
+//                } else if (checkExitingEmail()) {
+//                    document.getElementById("lblError").innerHTML = "This email is aready existed";
+//                    return false;
+//                }
+//
+//                document.getElementById("lblError").innerHTML = "";
+                document.getElementById("addNewECForm").submit();
                 return true;
             }
 
@@ -79,7 +83,7 @@
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -92,25 +96,25 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="Login.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
+                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
                             </li>
                         </ul>
                     </li>
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                  <ul class="nav navbar-nav side-nav">
+                    <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="AdminManager.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
                         </li>
                         <li>
-                            <a href="ViewEC"><i class="fa fa-fw fa-bar-chart-o"></i> View EC</a>
+                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                         </li>
                         <li>
-                            <a href="LoadEC"><i class="fa fa-fw fa-table"></i> Load EC</a>
+                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                         </li>
                     </ul>
                 </div>
@@ -124,49 +128,60 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                View EC
+                                Submit New Extenuating Circumstance
                             </h1>
                         </div>
                     </div>
                     <!-- /.row -->
-                    <table id="rounded-corner" class="table-responsive">
-                            <thead>
-                                <tr>
-                                    <th>Order Id</th>
-                                    <th>Order Date</th>
-                                    <th>Order Price</th>
-                                    <th>Customer Name</th>
-                                    <th>Customer Phone</th>
-                                    <th>Customer Address</th>
-                                    <th>Staff Name</th>
-                                    <th>Staff Address</th>
-                                    <th>Staff Phone</th>
-                                    <th>Store Name</th>
-                                    <th>Store Location</th>
-                                    <th>Product Name</th>
-                                    <th>Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <c:forEach var="p" items="${orderManager.list}">
-                                <tr class="odd">
-                                    <td>${p.ordId}</td>
-                                    <td>${p.ordDate}</td>
-                                    <td>${p.ordPrice}</td>
-                                    <td>${p.cusName}</td>
-                                    <td>${p.cusPhone}</td>
-                                    <td>${p.cusAddress}</td>
-                                    <td>${p.ssName}</td>
-                                    <td>${p.ssAddress}</td>
-                                    <td>${p.ssPhone}</td>
-                                    <td>${p.stName}</td>
-                                    <td>${p.stLocation}</td>
-                                    <td>${p.pName}</td>
-                                    <td><a style="color: red" href="ControllerMyServlet?action=deleteOrder&id=${p.ordId}">Delete</a></td>
-                                </tr>  
-                            </c:forEach>
-                        </tbody>
-                    </table>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <form id="addNewECForm" action="AddNewEC" method="POST" enctype="multipart/form-data">
+                                    <table class="table">
+                                        <tr>
+                                            <td>Title:*
+                                            </td>
+                                            <td><input type="text" id="txtTitle" name="title" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description:
+                                            </td>
+                                            <td>
+                                                <textarea type="textarea" id="txtDescription" name="description" cols="22" rows="5"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evidence 1:
+                                            </td>
+                                            <td> <input type="file" name="evidence1" id="evidence1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evidence 2: 
+                                            </td>
+                                            <td><input type="file" name="evidence2" id="evidence2" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <button type="button" onclick="return validateForm();">Submit</button>
+                                                <button type="reset">Reset</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td><label id="lblError" style="color: red;"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->
                 </div>

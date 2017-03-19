@@ -7,7 +7,7 @@
         <link href="css/login.css" rel="stylesheet">
     </head>
     <body>
-        <form action="Login">
+        <form action="Login" method="POST">
             <div class="imgcontainer">
                 <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
             </div>

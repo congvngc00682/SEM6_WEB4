@@ -18,10 +18,10 @@ import entities.Account;
 public class AccountDAO {
 
 	public static Account insertAccount(Account account) throws SQLException {
-		String SQL_INSERT = "insert into Account(username,password,email,role,faculty) values(?,?,?,?,?)";
+		String sqlQuery = "insert into Account(username,password,email,role,faculty) values(?,?,?,?,?)";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 		statement.setString(1, account.getUsername());
 		statement.setString(2, account.getPassword());
 		statement.setString(3, account.getEmail());
@@ -45,11 +45,11 @@ public class AccountDAO {
 	}
 
 	public static Account getSimilarUsername(String username) throws SQLException {
-		String SQL_INSERT = "select top(1)* from Account where username like '" + username
+		String sqlQuery = "select top(1)* from Account where username like '" + username
 				+ "[0-9]%' order by id desc";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 		statement.executeQuery();
 
 		ResultSet rs = statement.getResultSet();
@@ -62,10 +62,10 @@ public class AccountDAO {
 	}
         
         public String getUsernameByEmail(String email) throws SQLException {
-		String SQL_INSERT = "select top(1)* from Account where email =?";
+		String sqlQuery = "select top(1)* from Account where email =?";
 
 		Connection connection = new DataProcess().getConnection();
-		PreparedStatement statement = connection.prepareStatement(SQL_INSERT, Statement.RETURN_GENERATED_KEYS);
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
                 statement.setString(1, email);
 		statement.executeQuery();
 
@@ -75,6 +75,25 @@ public class AccountDAO {
                     username = 	rs.getString(2);
 		}
 		return username;
+	}
+        public static Account getCoordinator(int faculty) throws SQLException {
+		String sqlQuery = "select top(1)* from Account where faculty = ? and role =3";
+
+		Connection connection = new DataProcess().getConnection();
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+                statement.setInt(1, faculty);
+		statement.executeQuery();
+
+		ResultSet rs = statement.getResultSet();
+		Account coordinator = new Account();
+		if (rs.next()) {
+			coordinator.setId(rs.getInt(1));
+			coordinator.setUsername(rs.getString("username"));
+                        coordinator.setEmail(rs.getString("email"));
+                        coordinator.setRole(rs.getInt("role"));
+                        coordinator.setFaculty(rs.getInt("faculty"));
+		}
+		return coordinator;
 	}
 
 	public static void main(String[] args) {

@@ -35,7 +35,7 @@ public class SendMail {
 		props.put("mail.store.protocol", "pop3");
 		props.put("mail.transport.protocol", "smtp");
 		try {
-			Session session = Session.getDefaultInstance(props, new Authenticator() {
+			Session session = Session.getInstance(props, new Authenticator() {
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication(username, password);
 				}
@@ -52,7 +52,7 @@ public class SendMail {
 			msg.setContent(content, "text/html; charset=utf-8");
 			msg.setSentDate(new Date());
 			Transport.send(msg);
-			System.out.println("Message sent.");
+			System.out.println("Message sent to: " + toEmail);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

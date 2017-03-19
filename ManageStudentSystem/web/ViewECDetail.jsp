@@ -1,6 +1,6 @@
-<%@page import="entities.ExtenuatingCircumstance"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page session="true" %>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Add New ExtenuatingCircumstance</title>
+        <title>EC Detail</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -37,10 +37,13 @@
                 } else if (!validateEmail(email)) {
                     document.getElementById("emailError").innerHTML = "Invalid email format";
                     return false;
+                } else if (checkExitingEmail()) {
+                    document.getElementById("emailError").innerHTML = "This email is aready existed";
+                    return false;
                 }
 
                 document.getElementById("emailError").innerHTML = "";
-                document.getElementById("addNewAccountForm").submit();
+                //document.getElementById("addNewAccountForm").submit();
                 return true;
             }
 
@@ -64,7 +67,6 @@
         </script>
     </head>
     <body>
-        <jsp:useBean id="beanExtenuatingCircumstance" class="ExtenuatingCircumstance" scope="session"></jsp:useBean>
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -101,18 +103,18 @@
                 </ul>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                  <ul class="nav navbar-nav side-nav">
+                    <ul class="nav navbar-nav side-nav">
                         <li class="active">
-                            <a href="AdminManager.jsp"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
+                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
                         <li>
-                            <a href="ViewEC"><i class="fa fa-fw fa-bar-chart-o"></i> View EC</a>
+                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                         </li>
                         <li>
-                            <a href="LoadEC"><i class="fa fa-fw fa-table"></i> Load EC</a>
+                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
                         </li>
                     </ul>
                 </div>
@@ -126,67 +128,88 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Add new ExtenuatingCircumstance
+                                EC Detail
                             </h1>
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="panel-body">
-                        <form method="POST" class="form-horizontal" role="form" action="AddExtenuatingCircumstance">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <form id="ECDetailForm" action="" method="POST">
+                                    <table class="table">
+                                        <tr>
+                                            <td><b>Title</b>
+                                            </td>
+                                            <td>${ec.title}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Description</b>
+                                            </td>
+                                            <td>${ec.description}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Submitted date</b>
+                                            </td>
+                                            <td>${ec.submitted_date}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Status</b> 
+                                            </td>
+                                            <td>${ec.process_status}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Assigned Coordinator</b>
+                                            </td>
+                                            <td>${ec.coordinatorName}
+                                            </td>
+                                        </tr>
 
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Title:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="title" class="form-control"/>
-                                </div>
+                                        <tr>
+                                            <td><b>Evidence</b> 
+                                            </td>
+                                            <td>
+                                                <c:if test="${empty evidences}">
+                                                    No Evidences
+                                                </c:if>
+                                                <c:if test="${not empty evidences}">
+                                                    <c:forEach items="${evidences}" var="evidence" varStatus="loop">
+                                                         <a href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
+                                                         <br>
+                                                    </c:forEach>
+                                                </c:if>
+                                            </td>
+                                        </tr>
+                                        <!--check role to display button-->
+                                        <tr>
+                                            <c:if test="${role eq 3}">
+                                                <td><button type="button" onclick="">Accept</button>
+                                                <button type="button">Reject</button>
+                                                </td>
+                                            </c:if>
+                                            <c:if test="${role eq 4}">
+                                                <td><button type="button" onclick="">Edit</button>
+                                                <button type="button">Back</button>
+                                                </td>
+                                            </c:if>
+                                            <td>
+                                                
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td><label id="error" style="color: red;"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </form>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Description:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="description" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Submitted date:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="submitted_date" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Process status:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="process_status" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Processed date:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" name="processed_date" class="form-control">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Coordinator:</label>
-                                <div class="col-sm-10">
-                                    <select name="coordinator">
-                                        <c:forEach var="c" items="${beanProduct.listP}">
-                                            <option value="${c.pId}">${c.pName}</option>
-                                        </c:forEach><br>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="submit" class="btn btn-primary" onclick="alert('Add new Success !')">Add New</button>
-                                    <button type="reset" class="btn btn-primary">Reset</button>
-                                </div>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

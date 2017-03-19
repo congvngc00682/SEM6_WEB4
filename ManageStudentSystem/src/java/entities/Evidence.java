@@ -13,12 +13,20 @@ public class Evidence {
     private int id;
     private String files;
     private String evidence_date;
-    private int account;
+    private int ecId;
+
+    public int getEcId() {
+        return ecId;
+    }
+
+    public void setEcId(int ecId) {
+        this.ecId = ecId;
+    }
 
     public Evidence(String files, String evidence_date, int account) {
         this.files = files;
         this.evidence_date = evidence_date;
-        this.account = account;
+        this.ecId = account;
     }
 
     public Evidence() {
@@ -48,12 +56,4 @@ public class Evidence {
         this.evidence_date = evidence_date;
     }
 
-    public int getAccount() {
-        return account;
-    }
-
-    public void setAccount(int account) {
-        this.account = account;
-    }
-    
 }

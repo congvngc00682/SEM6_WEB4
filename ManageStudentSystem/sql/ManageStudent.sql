@@ -44,26 +44,27 @@ create table [Profile]
 
 go
 
+drop table ExtenuatingCircumstance
 
 create table ExtenuatingCircumstance
 (
 	id int primary key identity(1,1) not null,
 	title varchar(50),
 	[description] varchar(100),
-	submitted_date datetime,
+	submitted_date varchar(20),
 	process_status varchar(50),
-	processed_date datetime,
-	account int Foreign key references Account(id),
+	processed_date varchar(20),
+	studentId int Foreign key references Account(id),
 	assignedCoordinator int Foreign key references Account(id)
 )
 go
-
-
+if exists(select * from Evidence) drop table Evidence
+go
 create table Evidence
 (
 	id int primary key identity(1,1) not null,
 	files varchar(200) null,
-	evidence_date datetime,
+	evidence_date varchar (20),
 	EC_id int Foreign key references ExtenuatingCircumstance(id)
 )
 go
@@ -76,12 +77,17 @@ insert into [Role] values ('Admin')
 insert into [Role] values ('EC Manager')
 insert into [Role] values ('EC Coordinator')
 insert into [Role] values ('Student')
-delete from account
 
 insert into Account values('Admin', '123', 'wsadGroup@gmail.com', 1, 1);
-insert into Account values('Cong', '123', 'congvngc00682@fpt.edu.vn', 1, 1);
+insert into Account values('ECManager', '123', 'manager@gmail.com', 2, 1);
+insert into Account values('ECCoordinator', '123', 'coordinator@gmail.com', 3, 1);
+insert into Account values('Student', '123', 'Student@fpt.edu.vn', 4, 1);
 
-select * from Account
-insert into ExtenuatingCircumstance values('Feedback', 'Class', '10/3/2017', 'done', '12/3/2017', 1,2);
+insert into [profile] values ('E', 'C', null, null, 50);
 
+insert into ExtenuatingCircumstance values('Feedback', 'Class', '10/3/2017', 'submitted', '12/3/2017', 41,50);
+insert into ExtenuatingCircumstance values('sdfdsf', 'sdfdsf', '10/3/2017', 'submitted', '12/3/2017', 44,50);
+
+insert into Evidence values('/sdfds/sdf', '15/3/20167', 1);
+insert into Evidence values('/1234/1234', '15/3/20167', 1);
 

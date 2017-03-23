@@ -31,6 +31,7 @@
             }
 
             function validateForm() {
+                var test = serverValidation();
                 if (!validateRequiredField()) {
                     document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
                     return false;
@@ -38,10 +39,8 @@
                     document.getElementById("emailError").innerHTML = "Invalid email format";
                     return false;
                 } 
-//                else if (checkExitingEmail()) {
-//                    document.getElementById("emailError").innerHTML = "This email is aready existed";
-//                    return false;
-//                }
+                else if (!serverValidation()) {
+                }
 
                 document.getElementById("emailError").innerHTML = "";
                 document.getElementById("addNewAccountForm").submit();
@@ -64,6 +63,31 @@
                 var email = document.getElementById("email").value;
                 var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
                 return email_regex.test(email);
+            }
+            
+            function serverValidation() {
+                var firstname = document.getElementById("firstname").value;
+                var middlename = document.getElementById("middlename").value;
+                var lastname = document.getElementById("lastname").value;
+                var email = document.getElementById("email").value;
+                console.log("calling ajax");
+                $.ajax({
+                        
+                        url: 'ServerValidation?firstname='+firstname+'&middlename='+middlename+'&lastname='+lastname+'&email='+email,
+                        success: function (response) {
+                            console.log("response" + response);
+                            if (response === "profile") {
+                                document.getElementById("emailError").innerHTML = "This profile is aready existed";
+                                return false;
+                            } else if(response === "email"){
+                                document.getElementById("emailError").innerHTML = "This email is aready existed";
+                                return false;
+                            } else {
+                                document.getElementById("emailError").innerHTML = "";
+                                return true;
+                            }
+                        }
+                    });
             }
         </script>
     </head>
@@ -171,7 +195,7 @@
                                         <tr>
                                             <td>Middlename: 
                                             </td>
-                                            <td><input type="text" name="middlename"/>
+                                            <td><input type="text" name="middlename" id="middlename"/>
                                             </td>
                                         </tr>
                                         <tr>

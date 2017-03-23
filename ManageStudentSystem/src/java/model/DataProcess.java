@@ -24,7 +24,7 @@ public class DataProcess {
         Connection conn = null;
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            String url = "jdbc:sqlserver://localhost:1433;databaseName=ManageStudent";
+            String url = "jdbc:sqlserver://localhost:1433;databaseName=ManageStudentEC";
             String user = "sa";
             String pass = "123456";
             conn = DriverManager.getConnection(url, user, pass);

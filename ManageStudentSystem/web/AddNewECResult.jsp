@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
 <!DOCTYPE html>
@@ -99,7 +101,13 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="alert alert-info alert-dismissable">
-                                <i class="fa fa-info-circle"></i> <strong>New EC has been submitted successfully!</strong> 
+                                <i class="fa fa-info-circle"></i>
+                                <c:if test="${resultMsg eq 'inserted'}">
+                                    <strong>New EC has been submitted successfully!</strong>
+                                </c:if>
+                                 <c:if test="${resultMsg eq 'updated'}">
+                                    <strong>EC has been updated successfully!</strong>
+                                </c:if>
                             </div>
                         </div>
                     </div>

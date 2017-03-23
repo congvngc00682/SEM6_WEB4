@@ -4,7 +4,7 @@
 package model;
 
 import entities.Account;
-import entities.AssignedCoordinator;
+import entities.AssginedCoordinator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -66,7 +66,7 @@ public class ExtenuatingCircumstanceDAO {
 	}
         
         public ArrayList<ExtenuatingCircumstance> retrieveECsByCoordinatorId(int coordinatorId) throws SQLException {
-		String sqlQuery = "select ec.*,ac.processed_date, ac.coordinator, countEvidence.totalEvidence, p.firstname, p.lastname, p.middlename\n" +
+		String sqlQuery = "select ec.*,ec.processed_date, ac.coordinator, countEvidence.totalEvidence, p.firstname, p.lastname, p.middlename\n" +
                                 " from ExtenuatingCircumstance ec,\n" +
                                 "	(select ec.id, count(e.EC_id) as totalEvidence \n" +
                                 "		from ExtenuatingCircumstance ec left join Evidence e \n" +
@@ -105,7 +105,7 @@ public class ExtenuatingCircumstanceDAO {
 	}
         
         public ArrayList<ExtenuatingCircumstance> retrieveECsByFacultyId(int faculty) throws SQLException {
-		String sqlQuery = "select ec.*, countEvidence.totalEvidence,ac.processed_date, \n" +
+		String sqlQuery = "select ec.*, countEvidence.totalEvidence,ec.processed_date, \n" +
                                     "(p.firstname + ' ' + isnull(p.middlename, '') + ' ' + p.lastname) as studentName,\n" +
                                     "(cp.firstname + ' ' + isnull(cp.middlename, '') + ' ' + cp.lastname) as coordinatorName\n" +
                                     " from ExtenuatingCircumstance ec,\n" +
@@ -148,7 +148,7 @@ public class ExtenuatingCircumstanceDAO {
         
         public ArrayList<ExtenuatingCircumstance> retrieveECsByCriteria(int faculty, String title, 
                 String submitedBy, String assignedTo, String submittedDate, String status ) throws SQLException {
-		String sqlQuery = "select ec.*, countEvidence.totalEvidence, ac.processed_date, \n" +
+		String sqlQuery = "select ec.*, countEvidence.totalEvidence, ec.processed_date, \n" +
                                 " (p.firstname + ' ' + isnull(p.middlename, '') + ' ' + p.lastname) as studentName,\n" +
                                 " (cp.firstname + ' ' + isnull(cp.middlename, '') + ' ' + cp.lastname) as coordinatorName\n" +
                                 " from ExtenuatingCircumstance ec,\n" +
@@ -239,7 +239,7 @@ public class ExtenuatingCircumstanceDAO {
 	}
 
         public static ExtenuatingCircumstance insertEC(ExtenuatingCircumstance ec) throws SQLException {
-		String sqlQuery = "insert into ExtenuatingCircumstance values(?,?,?,?,?)";
+		String sqlQuery = "insert into ExtenuatingCircumstance values(?,?,?,?,?,?)";
 
 		Connection connection = new DataProcess().getConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -247,7 +247,8 @@ public class ExtenuatingCircumstanceDAO {
 		statement.setString(2, ec.getDescription());
 		statement.setString(3, ec.getSubmitted_date());
 		statement.setString(4, ec.getProcess_status());
-		statement.setInt(5, ec.getAccount());
+                statement.setString(5,null);
+		statement.setInt(6, ec.getAccount());
 
 		int affectedRows = statement.executeUpdate();
 
@@ -265,14 +266,13 @@ public class ExtenuatingCircumstanceDAO {
 		return ec;
 	}
         
-         public static AssignedCoordinator insertAssignedCoordinator(AssignedCoordinator coordinator) throws SQLException {
-		String sqlQuery = "insert into AssignedCoordinator(ec_Id, coordinator, processed_date) values(?,?,?)";
+         public static AssginedCoordinator insertAssignedCoordinator(AssginedCoordinator coordinator) throws SQLException {
+		String sqlQuery = "insert into AssignedCoordinator(ec_Id, coordinator) values(?,?)";
 
 		Connection connection = new DataProcess().getConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 		statement.setInt(1, coordinator.getEcId());
 		statement.setInt(2, coordinator.getCoordinatorId());
-		statement.setString(3, coordinator.getProcessedDate());
 
 		int affectedRows = statement.executeUpdate();
 
@@ -290,6 +290,49 @@ public class ExtenuatingCircumstanceDAO {
 		return coordinator;
 	}
         
+        public static void updateEC(ExtenuatingCircumstance ec, String updatedBy) throws SQLException {
+		String sqlQuery = "update ExtenuatingCircumstance set title='" + ec.getTitle() +
+                        "', description='" + ec.getDescription() +"' where id=" + ec.getId();
+                if(StringUtils.equals("coordinator", updatedBy) || StringUtils.equals("admin", updatedBy)) {
+                    sqlQuery = "update ExtenuatingCircumstance set process_status='" + ec.getProcess_status()+
+                            "', processed_date='"+ ec.getProcessedDate()+"' where id=" + ec.getId();
+                } 
+                System.out.println("Sql: " + sqlQuery);
+        
+		Connection connection = new DataProcess().getConnection();
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+
+		statement.executeUpdate();
+
+//		if (affectedRows == 0) {
+//			throw new SQLException("Update EC failed, no rows affected.");
+//		}
+
+//		ResultSet generatedKeys = statement.getGeneratedKeys();
+//		if (generatedKeys.next()) {
+//			ec.setId(generatedKeys.getInt(1));
+//			System.out.println("id: " + ec.getId());
+//		} else {
+//			throw new SQLException("Update EC failed, no ID obtained.");
+//		}
+//		return ec;
+	}
+        
+        public static void updateECProcess(ExtenuatingCircumstance ec, String updatedBy) throws SQLException {
+		String sqlQuery = "update AssignedCoordinator set title=" + ec.getTitle() +
+                        " description=" + ec.getDescription() +" where id=" + ec.getId();
+                if(StringUtils.equals("coordinator", updatedBy) || StringUtils.equals("admin", updatedBy)) {
+                    sqlQuery = "update ExtenuatingCircumstance process_status = " + ec.getProcess_status()+
+                            " processed_date =" + ec.getProcessedDate()+ " where id=" + ec.getId();
+                } 
+                System.out.println("Sql: " + sqlQuery);
+        
+		Connection connection = new DataProcess().getConnection();
+		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
+
+		statement.executeUpdate();
+	}
+         
 	public static void main(String[] args) {
             try {
                 ExtenuatingCircumstance ec = new ExtenuatingCircumstance();

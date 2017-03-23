@@ -30,39 +30,17 @@
                 }
             }
 
-            function validateForm() {
-                if (!validateRequiredField()) {
-                    document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
-                    return false;
-                } else if (!validateEmail(email)) {
-                    document.getElementById("emailError").innerHTML = "Invalid email format";
-                    return false;
-                } else if (checkExitingEmail()) {
-                    document.getElementById("emailError").innerHTML = "This email is aready existed";
-                    return false;
+            function processEC(decision, ecId) {
+                
+                if(decision === 'accept'){
+                    window.location.href = 'ProcessEC?decision=accepted&id=' + ecId;
+                } else {
+                    var confirmRejection = confirm("Do you really want to reject this EC?");
+                    if(confirmRejection) {
+                        window.location.href = 'ProcessEC?decision=rejected&id=' + ecId;
+                    } 
                 }
-
-                document.getElementById("emailError").innerHTML = "";
-                //document.getElementById("addNewAccountForm").submit();
-                return true;
-            }
-
-            function validateRequiredField() {
-                var role = document.getElementById("role").value;
-                var faculty = document.getElementById("faculty").value;
-                var firstname = document.getElementById("firstname").value;
-                var lastname = document.getElementById("lastname").value;
-                var email = document.getElementById("email").value;
-                if ((!role || !faculty || !firstname || !lastname || !email)) {
-                    return false;
-                }
-                return true;
-            }
-
-            function validateEmail() {
-                var email = document.getElementById("email").value;
-                var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-                return email_regex.test(email);
+                
             }
         </script>
     </head>
@@ -78,12 +56,11 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="AdminManager.jsp">Administrator</a>
                 </div>
                 <!-- Top Menu Items -->
                 <ul class="nav navbar-right top-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> John Smith <b class="caret"></b></a>
+                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
@@ -107,9 +84,11 @@
                         <li class="active">
                             <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
+                        <c:if test="${sessionScope.account.username eq 4}">
                         <li>
                             <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
+                        </c:if>
                         <li>
                             <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                         </li>
@@ -139,38 +118,39 @@
                                 <form id="ECDetailForm" action="" method="POST">
                                     <table class="table">
                                         <tr>
-                                            <td><b>Title</b>
+                                            <td><b>Title:</b>
                                             </td>
                                             <td>${ec.title}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><b>Description</b>
+                                            <td><b>Description:</b>
                                             </td>
                                             <td>${ec.description}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><b>Submitted date</b>
+                                            <td><b>Submitted date:</b>
                                             </td>
                                             <td>${ec.submitted_date}
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><b>Status</b> 
+                                            <td><b>Status:</b> 
                                             </td>
                                             <td>${ec.process_status}
                                             </td>
                                         </tr>
+                                        <c:if test="${role ne 3}">
                                         <tr>
-                                            <td><b>Assigned Coordinator</b>
+                                            <td><b>Assigned Coordinator:</b>
                                             </td>
                                             <td>${ec.coordinatorName}
                                             </td>
                                         </tr>
-
+                                        </c:if>
                                         <tr>
-                                            <td><b>Evidence</b> 
+                                            <td><b>Evidence:</b> 
                                             </td>
                                             <td>
                                                 <c:if test="${empty evidences}">
@@ -186,14 +166,14 @@
                                         </tr>
                                         <!--check role to display button-->
                                         <tr>
-                                            <c:if test="${role eq 3}">
-                                                <td><button type="button" onclick="">Accept</button>
-                                                <button type="button">Reject</button>
+                                            <c:if test="${role eq 3 && ec.process_status eq 'submitted'}">
+                                                <td><button type="button" onclick="processEC('accept',${ec.id})">Accept</button>
+                                                <button type="button" onclick="processEC('reject',${ec.id})">Reject</button>
                                                 </td>
                                             </c:if>
                                             <c:if test="${role eq 4}">
-                                                <td><button type="button" onclick="">Edit</button>
-                                                <button type="button">Back</button>
+                                                <td><a href="ViewEC?id=${ec.id}&role=4&action=edit">Edit</a>
+                                                <a href="Dashboard">Back</a>
                                                 </td>
                                             </c:if>
                                             <td>

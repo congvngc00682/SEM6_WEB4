@@ -31,38 +31,15 @@
             }
 
             function validateForm() {
-//                if (!validateRequiredField()) {
-//                    document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
-//                    return false;
-//                } else if (!validateEmail(email)) {
-//                    document.getElementById("lblError").innerHTML = "Invalid email format";
-//                    return false;
-//                } else if (checkExitingEmail()) {
-//                    document.getElementById("lblError").innerHTML = "This email is aready existed";
-//                    return false;
-//                }
-//
-//                document.getElementById("lblError").innerHTML = "";
+                var txtTitle = document.getElementById("txtTitle").value;
+                if (!txtTitle) {
+                    document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
+                    return false;
+                } 
+
+                document.getElementById("lblError").innerHTML = "";
                 document.getElementById("addNewECForm").submit();
                 return true;
-            }
-
-            function validateRequiredField() {
-                var role = document.getElementById("role").value;
-                var faculty = document.getElementById("faculty").value;
-                var firstname = document.getElementById("firstname").value;
-                var lastname = document.getElementById("lastname").value;
-                var email = document.getElementById("email").value;
-                if ((!role || !faculty || !firstname || !lastname || !email)) {
-                    return false;
-                }
-                return true;
-            }
-
-            function validateEmail() {
-                var email = document.getElementById("email").value;
-                var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-                return email_regex.test(email);
             }
         </script>
     </head>
@@ -108,7 +85,7 @@
                             <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
+                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
                         <li>
                             <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
@@ -128,7 +105,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Submit New Extenuating Circumstance
+                                Update Extenuating Circumstance
                             </h1>
                         </div>
                     </div>

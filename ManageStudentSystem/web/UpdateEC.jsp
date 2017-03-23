@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Student Home Page</title>
+        <title>Update EC</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -19,9 +19,27 @@
         <link href="css/modelLogin.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <script src="js/jquery.js" type="text/javascript"></script>
-        <script type="text/javascript">
+        <script>
+            // Get the modal
+            var modal = document.getElementById('id01');
 
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        function validateForm(){ 
+            var txtTitle = document.getElementById("txtTitle").value;
+                if (!txtTitle) {
+                    document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
+                    return false;
+                } 
+
+                document.getElementById("lblError").innerHTML = "";
+                document.getElementById("UpdateECForm").submit();
+                return true;
+            }       
         </script>
     </head>
     <body>
@@ -64,9 +82,11 @@
                         <li class="active">
                             <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
+                        <c:if test="${sessionScope.account.username eq 4}">
                         <li>
-                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Submit New EC</a>
+                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
+                        </c:if>
                         <li>
                             <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
                         </li>
@@ -85,7 +105,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Dashboard
+                                Update Extenuating Circumstance
                             </h1>
                         </div>
                     </div>
@@ -93,20 +113,54 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <div class="panel panel-default">
-                                <form id="searchECForm" action="" method="POST">
+                                <form id="UpdateECForm" action="UpdateEC" method="POST" enctype="multipart/form-data">
                                     <table class="table">
-                                        <tr><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Assigned To</th><th></th></tr>
-                                        <c:forEach items="${ecs}" var="ec">
-                                            <tr>
-                                                <td><a href="ViewEC?id=${ec.id}&role=4">${ec.title}</a></td>
-                                                <td>${ec.description}</td>
-                                                <td>${ec.process_status}</td>
-                                                <td>${ec.submitted_date}</td>
-                                                <td>${ec.coordinatorName}</td>
-                                                <td><a href="ViewEC?id=${ec.id}&role=4&action=edit">edit</a></td>
-                                            </tr>
-                                        </c:forEach>
-                                        
+                                        <input type="hidden" id ="hiddenId" name="id" value="${ec.id}"/>
+                                        <input type="hidden" id ="hiddenStatus" name="status" value="${ec.process_status}"/>
+                                        <tr>
+                                            <td>Title:*
+                                            </td>
+                                            <td><input type="text" id="txtTitle" name="title" value="${ec.title}" required/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Description:
+                                            </td>
+                                            <td>
+                                                <textarea type="textarea" id="txtDescription" name="description" cols="22" rows="5">${ec.description}</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Evidence
+                                            </td>
+                                            <td>
+                                                <c:if test="${empty evidences}">
+                                                    No Evidences
+                                                </c:if>
+                                                <c:if test="${not empty evidences}">
+                                                    <c:forEach items="${evidences}" var="evidence" varStatus="loop">
+                                                         <a href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
+                                                         <br>
+                                                    </c:forEach>
+                                                </c:if>
+                                                         <br>
+                                                         <input type="file" name="evidence1" id="evidence1" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td>
+                                                <button type="button" onclick="return validateForm();">Submit</button>
+                                                <button type="reset">Reset</button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                            </td>
+                                            <td><label id="lblError" style="color: red;"/>
+                                            </td>
+                                        </tr>
                                     </table>
                                 </form>
                             </div>

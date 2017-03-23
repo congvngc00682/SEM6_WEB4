@@ -5,12 +5,10 @@
  */
 package controller;
 
-import entities.Evidence;
 import entities.ExtenuatingCircumstance;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -18,16 +16,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EvidenceDAO;
 import model.ExtenuatingCircumstanceDAO;
-import org.apache.commons.lang3.StringUtils;
+import utils.WsadUtils;
 
 /**
  *
  * @author f87
  */
-@WebServlet(name = "ViewEC", urlPatterns = {"/ViewEC"})
-public class ViewEC extends HttpServlet {
+@WebServlet(name = "ProcessEC", urlPatterns = {"/ProcessEC"})
+public class ProcessEC extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,26 +37,20 @@ public class ViewEC extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String decision = request.getParameter("decision");
+        int ecId = Integer.parseInt(request.getParameter("id"));
+        
+        ExtenuatingCircumstance ec = new ExtenuatingCircumstance();
+        ec.setId(ecId);
+        ec.setProcess_status(decision);
+        ec.setProcessedDate(WsadUtils.GetCurrentDatetime().toString());
+        
         try {
-            response.setContentType("text/html;charset=UTF-8");
-            int ecId = Integer.parseInt(request.getParameter("id"));
-            String action = request.getParameter("action");
-            ExtenuatingCircumstance ec = new ExtenuatingCircumstanceDAO().retrieveECById(ecId);
-            ArrayList<Evidence> evidences = new EvidenceDAO().retrieveEvidenceByEcId(ecId);
-            
-            request.setAttribute("ec", ec);
-            request.setAttribute("evidences", evidences);
-            request.setAttribute("role", request.getParameter("role"));
-            
-            if(StringUtils.equals(action, "edit"))
-            {
-                request.getRequestDispatcher("UpdateEC.jsp").forward(request, response);
-            } else
-            {
-                request.getRequestDispatcher("ViewECDetail.jsp").forward(request, response);
-            }
+            new ExtenuatingCircumstanceDAO().updateEC(ec, "coordinator");
+            request.getRequestDispatcher("Dashboard").forward(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(ViewEC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProcessEC.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

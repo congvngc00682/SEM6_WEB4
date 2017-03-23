@@ -6,7 +6,7 @@
 package controller;
 
 import entities.Account;
-import entities.AssignedCoordinator;
+import entities.AssginedCoordinator;
 import entities.Evidence;
 import entities.ExtenuatingCircumstance;
 import java.io.File;
@@ -88,8 +88,7 @@ public class AddNewEC extends HttpServlet {
 
                 HttpSession session = request.getSession(false);
                 Account studentAccount = (Account) session.getAttribute("account");
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime now = WsadUtils.GetCurrentDatetime();
 
                 // insert EC
                 ec.setTitle(title);
@@ -118,17 +117,20 @@ public class AddNewEC extends HttpServlet {
                     "Sorry this Servlet only handles file upload request");
         }
 
+        request.setAttribute("resultMsg", "inserted");
         request.getRequestDispatcher("AddNewECResult.jsp").forward(request, response);
     }
 
+    
+
     private void insertAssignedCoordinator(Account coordinator, ExtenuatingCircumstance inserted) throws SQLException {
         
-        AssignedCoordinator aCoordinator = new AssignedCoordinator();
+        AssginedCoordinator aCoordinator = new AssginedCoordinator();
 
         aCoordinator.setEcId(inserted.getId());
         aCoordinator.setCoordinatorId(coordinator.getId());
 
-        AssignedCoordinator insertedAC = new ExtenuatingCircumstanceDAO().insertAssignedCoordinator(aCoordinator);
+        AssginedCoordinator insertedAC = new ExtenuatingCircumstanceDAO().insertAssignedCoordinator(aCoordinator);
     }
 
     private void insertedEvidence(ArrayList<FileItem> files, LocalDateTime now, ExtenuatingCircumstance inserted, Account studentAccount) throws SQLException {

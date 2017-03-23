@@ -1,6 +1,8 @@
 package utils;
 
 import entities.ExtenuatingCircumstance;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class WsadUtils {
@@ -84,4 +86,9 @@ public class WsadUtils {
             return content.toString();
         }
        
+        public static LocalDateTime GetCurrentDatetime() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        return now;
+    }
 }

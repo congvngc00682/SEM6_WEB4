@@ -5,8 +5,13 @@
  */
 package controller;
 
-import entities.Evidence;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import entities.Account;
 import entities.ExtenuatingCircumstance;
+import entities.Profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -18,16 +23,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.EvidenceDAO;
-import model.ExtenuatingCircumstanceDAO;
+import model.AccountDAO;
+import model.ProfileDAO;
 import org.apache.commons.lang3.StringUtils;
 
 /**
  *
  * @author f87
  */
-@WebServlet(name = "ViewEC", urlPatterns = {"/ViewEC"})
-public class ViewEC extends HttpServlet {
+@WebServlet(name = "ServerValidation", urlPatterns = {"/ServerValidation"})
+public class ServerValidation extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,26 +45,35 @@ public class ViewEC extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        String email = request.getParameter("email");
+        String firstname = request.getParameter("firstname");
+        String middlename = request.getParameter("middlename");
+        String lastname = request.getParameter("lastname");
+
+        System.out.println(email + "-" + firstname + "-" + middlename + "-" + lastname);
+        Profile f = new Profile();
+        f.setFirstname(firstname);
+        f.setMiddlename(middlename);
+        f.setLastname(lastname);
+
+        String resultMsg = StringUtils.EMPTY;
         try {
-            response.setContentType("text/html;charset=UTF-8");
-            int ecId = Integer.parseInt(request.getParameter("id"));
-            String action = request.getParameter("action");
-            ExtenuatingCircumstance ec = new ExtenuatingCircumstanceDAO().retrieveECById(ecId);
-            ArrayList<Evidence> evidences = new EvidenceDAO().retrieveEvidenceByEcId(ecId);
-            
-            request.setAttribute("ec", ec);
-            request.setAttribute("evidences", evidences);
-            request.setAttribute("role", request.getParameter("role"));
-            
-            if(StringUtils.equals(action, "edit"))
-            {
-                request.getRequestDispatcher("UpdateEC.jsp").forward(request, response);
-            } else
-            {
-                request.getRequestDispatcher("ViewECDetail.jsp").forward(request, response);
+            boolean isProfileExisted = new ProfileDAO().checkExistingProfileByName(f);
+            String username = new AccountDAO().getUsernameByEmail(email);
+            if (isProfileExisted) {
+                resultMsg = "profile";
+                response.getWriter().print(resultMsg);
+                return;
             }
+
+            if (StringUtils.isNotEmpty(username)) {
+                resultMsg = "email";
+                response.getWriter().print(resultMsg);
+            }
+
         } catch (SQLException ex) {
-            Logger.getLogger(ViewEC.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ServerValidation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

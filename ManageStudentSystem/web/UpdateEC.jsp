@@ -110,61 +110,57 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <form id="UpdateECForm" action="UpdateEC" method="POST" enctype="multipart/form-data">
-                                    <table class="table">
-                                        <input type="hidden" id ="hiddenId" name="id" value="${ec.id}"/>
-                                        <input type="hidden" id ="hiddenStatus" name="status" value="${ec.process_status}"/>
-                                        <tr>
-                                            <td>Title:*
-                                            </td>
-                                            <td><input type="text" id="txtTitle" name="title" value="${ec.title}" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Description:
-                                            </td>
-                                            <td>
-                                                <textarea type="textarea" id="txtDescription" name="description" cols="22" rows="5">${ec.description}</textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Evidence
-                                            </td>
-                                            <td>
-                                                <c:if test="${empty evidences}">
-                                                    No Evidences
-                                                </c:if>
-                                                <c:if test="${not empty evidences}">
-                                                    <c:forEach items="${evidences}" var="evidence" varStatus="loop">
-                                                         <a href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
-                                                         <br>
-                                                    </c:forEach>
-                                                </c:if>
-                                                         <br>
-                                                         <input type="file" name="evidence1" id="evidence1" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td>
-                                                <button type="button" onclick="return validateForm();">Submit</button>
-                                                <button type="reset">Reset</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><label id="lblError" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                    <div class="panel-body">
+
+                        <form id="UpdateECForm" class="form-horizontal" action="UpdateEC" method="POST" enctype="multipart/form-data">
+
+                            <input type="hidden" id ="hiddenId" name="id" value="${ec.id}"/>
+                            <input type="hidden" id ="hiddenStatus" name="status" value="${ec.process_status}"/>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Title*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="title" id="txtTitle" class="form-control" value="${ec.title}" required="true"/>
+                                </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Description:</label>
+                                <div class="col-sm-4">
+                                    <textarea type="textarea" name="description" id="txtDescription" class="form-control" cols="22" rows="5" style="max-width: 335px">${ec.description}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left; margin-top: 20px;">Evidence</label>
+                                <div class="col-sm-4">
+                                    <c:if test="${empty evidences}">
+                                        No Evidences
+                                    </c:if>
+                                    <c:if test="${not empty evidences}">
+                                        <c:forEach items="${evidences}" var="evidence" varStatus="loop">
+                                            <a class="btn btn-primary" href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
+                                            <br>
+                                        </c:forEach>
+                                    </c:if>
+                                    <br>
+                                    <input type="file" name="evidence1" id="evidence1" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="button" class="btn btn-primary" onclick="return validateForm();">Submit</button>
+                                    <button type="reset" class="btn btn-primary" onclick="return resetError();">Reset</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label id="lblError" style="color: red;"/>
+                                </div>
+                            </div>
+                            
+                        </form>
+
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

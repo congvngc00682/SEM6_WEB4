@@ -91,21 +91,22 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <form id="searchECForm" action="" method="POST">
-                                    <table class="table">
-                                        <tr><th>Id</th><th>Title</th><th>Description</th><th>Status</th><th>Submitted Date</th><th>Submitted By</th><th>Assigned To</th></tr>
-                                        <c:forEach items="${ecs}" var="ec">
-                                            <tr>
-                                                <td></td>
-                                                <td><a href="ViewEC?id=${ec.id}&role=2">${ec.title}</a></td>
-                                                <td>${ec.description}</td>
-                                                <td>${ec.process_status}</td>
-                                                <td>${ec.submitted_date}</td>
-                                                <td>${ec.studentName}</td>
-                                                <td>${ec.coordinatorName}</td>
-                                            </tr>
-                                        </c:forEach>
-                                        
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tr><th>Id</th><th>Title</th><th>Description</th><th>Status</th><th>Submitted Date</th><th>Submitted By</th><th>Assigned To</th></tr>
+                                                    <c:forEach items="${ecs}" var="ec">
+                                                <tr>
+                                                    <td></td>
+                                                    <td><a class="btn btn-primary" href="ViewEC?id=${ec.id}&role=2">${ec.title}</a></td>
+                                                    <td>${ec.description}</td>
+                                                    <td>${ec.process_status}</td>
+                                                    <td>${ec.submitted_date}</td>
+                                                    <td>${ec.studentName}</td>
+                                                    <td>${ec.coordinatorName}</td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
                                 </form>
                             </div>
                         </div>

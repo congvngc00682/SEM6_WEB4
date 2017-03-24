@@ -105,59 +105,55 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                Update Extenuating Circumstance
+                                Add New Extenuating Circumstance
                             </h1>
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <form id="addNewECForm" action="AddNewEC" method="POST" enctype="multipart/form-data">
-                                    <table class="table">
-                                        <tr>
-                                            <td>Title:*
-                                            </td>
-                                            <td><input type="text" id="txtTitle" name="title" required/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Description:
-                                            </td>
-                                            <td>
-                                                <textarea type="textarea" id="txtDescription" name="description" cols="22" rows="5"></textarea>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Evidence 1:
-                                            </td>
-                                            <td> <input type="file" name="evidence1" id="evidence1" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Evidence 2: 
-                                            </td>
-                                            <td><input type="file" name="evidence2" id="evidence2" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td>
-                                                <button type="button" onclick="return validateForm();">Submit</button>
-                                                <button type="reset">Reset</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><label id="lblError" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                    <div class="panel-body">
+                        <form id="addNewECForm" action="AddNewEC" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Title:*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="title" id="txtTitle" class="form-control"/>
+                                </div>
                             </div>
-                        </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Description:*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="description" id="txtDescription" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Evidence 1:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" name="evidence1" id="evidence1" class="form-control">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Evidence 2:</label>
+                                <div class="col-sm-4">
+                                    <input type="file" name="evidence2" id="evidence2" class="form-control">
+                                </div>
+                            </div>
+                            
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary" onclick="return validateForm();">Add New</button>
+                                    <button type="reset" class="btn btn-primary" onclick="resetError();">Reset</button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label id="lblError" style="color: red;"/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

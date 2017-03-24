@@ -31,26 +31,26 @@
                     var submittedDate = $("#submittedDate").val();
                     var status = $("#status").val();
                     $.ajax({
-                        url: 'SearchEC?faculty='+faculty+'&title='+title+'&studentName='+studentName +'&coordinatorName='+coordinatorName+'&submittedDate='+submittedDate+ '&status='+status,
+                        url: 'SearchEC?faculty=' + faculty + '&title=' + title + '&studentName=' + studentName + '&coordinatorName=' + coordinatorName + '&submittedDate=' + submittedDate + '&status=' + status,
                         dataType: "json",
                         success: function (responseJson) {
                             if (responseJson.length !== 0) {
-                                $("#countrytable").html("");
-                                var table1 = $("#countrytable");
+                                                $("#countrytable").html("");
+                                                var table1 = $("#countrytable");
                                 var th = $("<tr><th>Id</th><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Assigned To</th></tr>");
                                 th.appendTo(table1);
-                                
-                                $.each(responseJson, function (key, value) {
-                                    var rowNew = $("<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
-                                    rowNew.children().eq(0).text(value['id']);
-                                    rowNew.children().eq(1).html("<a href='ViewEC?id=" + value['id'] +"'>"+ value['title'] + "</a>");
-                                    rowNew.children().eq(2).text(value['description']);
-                                    rowNew.children().eq(3).text(value['process_status']);
-                                    rowNew.children().eq(4).text(value['submitted_date']);
-                                    rowNew.children().eq(5).text(value['coordinatorName']);
 
-                                    rowNew.appendTo(table1);
-                                });
+                                                $.each(responseJson, function (key, value) {
+                                                        var rowNew = $("<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>");
+                                                            rowNew.children().eq(0).text(value['id']);
+                                                            rowNew.children().eq(1).html("<a href='ViewEC?id=" + value['id'] + "'>" + value['title'] + "</a>");
+                                                            rowNew.children().eq(2).text(value['description']);
+                                                            rowNew.children().eq(3).text(value['process_status']);
+                                                            rowNew.children().eq(4).text(value['submitted_date']);
+                                                            rowNew.children().eq(5).text(value['coordinatorName']);
+
+                                                            rowNew.appendTo(table1);
+                                                });
                              } else {
                                 $("#countrytable").html("No Record found!");
                             }
@@ -130,82 +130,76 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <form id="searchECForm" action="" method="POST">
-                                    <table class="table">
-                                        <tr>
-                                            <td>Faculty:
-                                            </td>
-                                            <td>
-                                                <select name="faculty" id="faculty">
-                                                    <option value="0" selected="true">---Select faculty---</option>
-                                                    <option value="1">FPT</option>
-                                                    <option value="2">Faculty 2</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Title:
-                                            </td>
-                                            <td> <input type="text" id="title" name="title"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Submitted By:
-                                            </td>
-                                            <td> <input type="text" id="studentName" name="studentName"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Assigned To:
-                                            </td>
-                                            <td><input type="text" name="coordinatorName" id="coordinatorName"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Submitted Date:
-                                            </td>
-                                            <td><input type="text" name="submittedDate" id="submittedDate" />
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Status:
-                                            </td>
-                                            <td>
-                                                <select name="status" id="status">
-                                                    <option value="">---Select status---</option>
-                                                    <option value="submitted">submitted</option>
-                                                    <option value="accepted">accepted</option>
-                                                    <option value="rejected">rejected</option>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td>
-                                                <button type="button" id="btnSearch">Search</button>
-                                                <button type="reset">Reset</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><label id="emailError" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                    </table>
+                    <div class="panel-body">
+                        <form id="searchECForm" action="" method="POST" class="form-horizontal">
 
-                                    <div id="tablediv">
-                                        <table cellspacing="0" id="countrytable" class="table"> 
-                                        </table>
-                                    </div>
-
-                                </form>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Faculty:</label>
+                                <div class="col-sm-4">
+                                    <select name="faculty" id="faculty" required="true">
+                                        <option value="0" selected="true">---Select faculty---</option>
+                                        <option value="1">FPT</option>
+                                        <option value="2">Faculty 2</option>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Title:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="title" id="title" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            
+                           <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Submitted By:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="studentName" id="studentName" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Assigned To:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="coordinatorName" id="coordinatorName" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Submitted Date:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="submittedDate" id="submittedDate" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Status:</label>
+                                <div class="col-sm-4">
+                                    <select name="status" id="status" required="true">
+                                        <option value="">---Select status---</option>
+                                        <option value="submitted">submitted</option>
+                                        <option value="accepted">accepted</option>
+                                        <option value="rejected">rejected</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="button" class="btn btn-primary" id="btnSearch">Search</button>
+                                    <button type="reset" class="btn btn-primary">Reset</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label id="emailError" style="color: red;"/>
+                                </div>
+                            </div>
+                            
+                            <div id="tablediv">
+                                <table cellspacing="0" id="countrytable" class="table"> 
+                                </table>
+                            </div>
+
+                        </form>
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

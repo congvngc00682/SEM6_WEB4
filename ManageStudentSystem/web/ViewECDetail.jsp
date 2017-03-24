@@ -107,89 +107,89 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">
-                                EC Detail
+                                Extenuating Circumstance Detail
                             </h1>
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <form id="ECDetailForm" action="" method="POST">
-                                    <table class="table">
-                                        <tr>
-                                            <td><b>Title:</b>
-                                            </td>
-                                            <td>${ec.title}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Description:</b>
-                                            </td>
-                                            <td>${ec.description}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Submitted date:</b>
-                                            </td>
-                                            <td>${ec.submitted_date}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td><b>Status:</b> 
-                                            </td>
-                                            <td>${ec.process_status}
-                                            </td>
-                                        </tr>
-                                        <c:if test="${role ne 3}">
-                                        <tr>
-                                            <td><b>Assigned Coordinator:</b>
-                                            </td>
-                                            <td>${ec.coordinatorName}
-                                            </td>
-                                        </tr>
-                                        </c:if>
-                                        <tr>
-                                            <td><b>Evidence:</b> 
-                                            </td>
-                                            <td>
-                                                <c:if test="${empty evidences}">
-                                                    No Evidences
-                                                </c:if>
-                                                <c:if test="${not empty evidences}">
-                                                    <c:forEach items="${evidences}" var="evidence" varStatus="loop">
-                                                         <a href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
-                                                         <br>
-                                                    </c:forEach>
-                                                </c:if>
-                                            </td>
-                                        </tr>
-                                        <!--check role to display button-->
-                                        <tr>
-                                            <c:if test="${role eq 3 && ec.process_status eq 'submitted'}">
-                                                <td><button type="button" onclick="processEC('accept',${ec.id})">Accept</button>
-                                                <button type="button" onclick="processEC('reject',${ec.id})">Reject</button>
-                                                </td>
-                                            </c:if>
-                                            <c:if test="${role eq 4}">
-                                                <td><a href="ViewEC?id=${ec.id}&role=4&action=edit">Edit</a>
-                                                <a href="Dashboard">Back</a>
-                                                </td>
-                                            </c:if>
-                                            <td>
-                                                
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><label id="error" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                    <div class="panel-body">
+
+                        <form id="ECDetailForm" class="form-horizontal" action="" method="POST">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Title:</label>
+                                <div class="col-sm-4">
+                                    <p style="margin-top: 5px">${ec.title}</p>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Description:</label>
+                                <div class="col-sm-4">
+                                    <p style="margin-top: 5px">${ec.description}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Submitted date:</label>
+                                <div class="col-sm-4">
+                                    <p style="margin-top: 5px">${ec.submitted_date}</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Status:</label>
+                                <div class="col-sm-4">
+                                    <p style="margin-top: 5px">${ec.process_status}</p>
+                                </div>
+                            </div>
+
+                            <c:if test="${role ne 3}">
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" style="text-align: left">Assigned Coordinator:</label>
+                                    <div class="col-sm-4">
+                                        <p style="margin-top: 15px">${ec.coordinatorName}</p>
+                                    </div>
+                                </div>
+                            </c:if>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Evidence:</label>
+                                <div class="col-sm-4">
+                                    <c:if test="${empty evidences}">
+                                        No Evidences
+                                    </c:if>
+                                    <c:if test="${not empty evidences}">
+                                        <c:forEach items="${evidences}" var="evidence" varStatus="loop">
+                                            <a class="btn btn-primary" href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
+                                            <br>
+                                        </c:forEach>
+                                    </c:if>
+                                </div>
+                            </div> 
+
+                            <!--check role to display button-->
+                            <div class="form-group">
+                                <c:if test="${role eq 3 && ec.process_status eq 'submitted'}">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <button type="button" onclick="processEC('accept',${ec.id})">Accept</button>
+                                        <button type="button" onclick="processEC('reject',${ec.id})">Reject</button>
+                                    </div>
+                                </c:if>
+                                <c:if test="${role eq 4}">
+                                    <a href="ViewEC?id=${ec.id}&role=4&action=edit" class="btn btn-primary">Edit</a>
+                                        <a class="btn btn-primary" href="Dashboard">Back</a>
+                                    
+                                </c:if>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label id="error" style="color: red;"/>
+                                </div>
+                            </div>
+                            
+                        </form>
+
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

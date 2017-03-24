@@ -158,77 +158,72 @@
                         </div>
                     </div>
                     <!-- /.row -->
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="panel panel-default">
-                                <form id="addNewAccountForm" action="AddNewAccount" method="POST">
-                                    <table class="table">
-                                        <tr>
-                                            <td>Role:*
-                                            </td>
-                                            <td><select name="role" id="role" required="true" placeholder="Select role">
-                                                    <option value="">---Select role---</option>
-                                                    <c:forEach items="${roles}" var="role">
-                                                        <option value="${role.roleId}">${role.role}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Faculty:*
-                                            </td>
-                                            <td>
-                                                <select name="faculty" id="faculty" required="true">
-                                                    <option value="">---Select faculty---</option>
-                                                    <c:forEach items="${faculties}" var="faculty">
-                                                        <option value="${faculty.id}">${faculty.facultyName}</option>
-                                                    </c:forEach>
-                                                </select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Firstname:*
-                                            </td>
-                                            <td> <input type="text" id="firstname" name="firstname" required="true"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Middlename: 
-                                            </td>
-                                            <td><input type="text" name="middlename" id="middlename"/>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Lastname:*
-                                            </td>
-                                            <td><input type="text" name="lastname" id="lastname" required="true"/>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td>Email:* 
-                                            </td>
-                                            <td><input type="text" id="email" name="email" onblur="validateEmail(this.value)" required="true" placeholder="example@email.com"/> 
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td>
-                                                <button type="button" onclick="return validateForm();">Create Account</button>
-                                                <button type="reset">Reset</button>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                            </td>
-                                            <td><label id="emailError" style="color: red;"/>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </form>
+                    <div class="panel-body">
+                        <form method="POST" class="form-horizontal" role="form" action="AddNewAccount">
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Role:*</label>
+                                <div class="col-sm-4">
+                                    <select name="role" id="role" required="true" placeholder="Select role">
+                                        <option value="">---Select role---</option>
+                                        <c:forEach items="${roles}" var="role">
+                                            <option value="${role.roleId}">${role.role}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Faculty:*</label>
+                                <div class="col-sm-4">
+                                    <select name="faculty" id="faculty" required="true">
+                                        <option value="">---Select faculty---</option>
+                                        <c:forEach items="${faculties}" var="faculty">
+                                            <option value="${faculty.id}">${faculty.facultyName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Firstname:*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="firstname" id="firstname" class="form-control" required="true"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Middlename:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="middlename" id="middlename" class="form-control">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Lastname:*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="lastname" id="lastname" class="form-control" required="true">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Email:*</label>
+                                <div class="col-sm-4">
+                                    <input type="text" id="email" name="email" class="form-control" onblur="validateEmail(this.value)" required="true" placeholder="example@email.com">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="button" class="btn btn-primary" onclick="return validateForm();">Create Account</button>
+                                    <button type="reset" class="btn btn-primary" onclick="return resetError();">Reset</button>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <label id="emailError" style="color: red;"/>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                     <!-- /.row -->
                     <!-- /.container-fluid -->

@@ -94,20 +94,21 @@
                         <div class="col-lg-12">
                             <div class="panel panel-default">
                                 <form id="searchECForm" action="" method="POST">
-                                    <table class="table">
-                                        <tr><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Assigned To</th><th></th></tr>
-                                        <c:forEach items="${ecs}" var="ec">
-                                            <tr>
-                                                <td><a href="ViewEC?id=${ec.id}&role=4">${ec.title}</a></td>
-                                                <td>${ec.description}</td>
-                                                <td>${ec.process_status}</td>
-                                                <td>${ec.submitted_date}</td>
-                                                <td>${ec.coordinatorName}</td>
-                                                <td><a href="ViewEC?id=${ec.id}&role=4&action=edit">edit</a></td>
-                                            </tr>
-                                        </c:forEach>
-                                        
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tr><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Assigned To</th><th></th></tr>
+                                                    <c:forEach items="${ecs}" var="ec">
+                                                <tr>
+                                                    <td><a href="ViewEC?id=${ec.id}&role=4">${ec.title}</a></td>
+                                                    <td>${ec.description}</td>
+                                                    <td>${ec.process_status}</td>
+                                                    <td>${ec.submitted_date}</td>
+                                                    <td>${ec.coordinatorName}</td>
+                                                    <td><a class="btn btn-primary" href="ViewEC?id=${ec.id}&role=4&action=edit">edit</a></td>
+                                                </tr>
+                                            </c:forEach>
+                                        </table>
+                                    </div>
                                 </form>
                             </div>
                         </div>

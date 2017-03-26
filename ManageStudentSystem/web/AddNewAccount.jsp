@@ -31,16 +31,16 @@
             }
 
             function validateForm() {
-                var test = serverValidation();
+                //var test = serverValidation();
                 if (!validateRequiredField()) {
                     document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
                     return false;
-                } else if (!validateEmail(email)) {
+                } else if (!validateEmail()) {
                     document.getElementById("emailError").innerHTML = "Invalid email format";
                     return false;
                 } 
-                else if (!serverValidation()) {
-                }
+//                else if (!serverValidation()) {
+//                }
 
                 document.getElementById("emailError").innerHTML = "";
                 document.getElementById("addNewAccountForm").submit();
@@ -152,9 +152,9 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">
+                            <h4 class="page-header">
                                 Add new account
-                            </h1>
+                            </h4>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -213,14 +213,14 @@
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-primary" onclick="return validateForm();">Create Account</button>
-                                    <button type="reset" class="btn btn-primary" onclick="return resetError();">Reset</button>
+                                    <button type="button" class="btn btn-primary" onclick=" validateForm();">Create Account</button>
+                                    <button type="reset" class="btn btn-primary" >Reset</button>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <label id="emailError" style="color: red;"/>
+                                    <label id="emailError" style="text-align: left; margin-top: 15px;color: red"/>
                                 </div>
                             </div>
                         </form>

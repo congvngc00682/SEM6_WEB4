@@ -91,30 +91,28 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label" style="text-align: left;">Old Password:*</label>
+                            <label class="col-sm-2 control-label" style="text-align: left;">Current Password:*</label>
                             <div class="col-sm-10">
-                                <input type="password" id="oldPassword" name="oldPassword" placeholder="Old Password:" class="form-control" required="true">
+                                <input type="password" id="oldPassword" name="oldPassword" placeholder="Current Password" class="form-control" required="true">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label" style="text-align: left;">New Password:*</label>
                             <div class="col-sm-10">
-                                <input type="password" id="newPassword" name="newPassword" placeholder="New Password:" class="form-control" required="true">
+                                <input type="password" id="newPassword" name="newPassword" placeholder="New Password" class="form-control" required="true">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label" style="text-align: left;">Confirm Password:*</label>
                             <div class="col-sm-10">
-                                <input type="password" id="confirmPassword"  name="confirmPassword" placeholder="Re-enter New Password:" onblur="ComparePassword()" class="form-control" required="true">
+                                <input type="password" id="confirmPassword"  name="confirmPassword" placeholder="Re-enter New Password" onblur="ComparePassword()" class="form-control" required="true">
                             </div>
                         </div>
-
-
                         <label id="alert" style="color: red"></label><br>
                         <button type="button" onclick="return validateForm();">Change</button>
-
+                        <a href="Login.jsp">Back</a>
                     </form>
                 </div>
                 <!-- /.row -->

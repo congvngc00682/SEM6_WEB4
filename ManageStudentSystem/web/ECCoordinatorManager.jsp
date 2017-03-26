@@ -79,9 +79,9 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">
+                            <h4 class="page-header">
                                 Dashboard
-                            </h1>
+                            </h4>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -91,11 +91,10 @@
                                 <form id="searchECForm" action="" method="POST">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
-                                            <tr><th>Id</th><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Submitted By</th></tr>
+                                            <tr><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Submitted By</th></tr>
                                                     <c:forEach items="${ecs}" var="ec">
                                                 <tr>
-                                                    <td></td>
-                                                    <td><a class="btn btn-primary" href="ViewEC?id=${ec.id}&role=3">${ec.title}</a></td>
+                                                    <td><a href="ViewEC?id=${ec.id}&role=3">${ec.title}</a></td>
                                                     <td>${ec.description}</td>
                                                     <td>${ec.process_status}</td>
                                                     <td>${ec.submitted_date}</td>

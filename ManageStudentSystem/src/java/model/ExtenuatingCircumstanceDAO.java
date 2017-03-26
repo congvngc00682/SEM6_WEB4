@@ -37,7 +37,7 @@ public class ExtenuatingCircumstanceDAO {
                                 "   where ec.id = countEvidence.id\n" +
                                 "	and ac.coordinator = coordinator.id\n" +
                                 "	and ac.ec_id = ec.id\n" +
-                                "	and ac.coordinator = cp.accountId and submittedBy = ? ";
+                                "	and ac.coordinator = cp.accountId and submittedBy = ? order by ec.submitted_date desc";
                 System.out.println("SQL: " + sqlQuery);
                 
 		Connection connection = new DataProcess().getConnection();
@@ -77,7 +77,7 @@ public class ExtenuatingCircumstanceDAO {
                                 " ac.ec_id = ec.id and\n" +
                                 " student.id = ec.submittedBy and \n" +
                                 " student.id = p.accountId and\n" +
-                                " ac.coordinator = ?;";
+                                " ac.coordinator = ? order by ec.submitted_date desc;";
                 System.out.println("SQL: " + sqlQuery);
 		Connection connection = new DataProcess().getConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -120,7 +120,7 @@ public class ExtenuatingCircumstanceDAO {
                                     " and student.id = p.accountId \n" +
                                     " and ac.coordinator = cp.accountId \n" +
                                     " and student.faculty = f.id" +
-                                    " and f.id = ?";
+                                    " and f.id = ? order by ec.submitted_date desc";
                 System.out.println("SQL: " + sqlQuery);
 		Connection connection = new DataProcess().getConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
@@ -162,7 +162,7 @@ public class ExtenuatingCircumstanceDAO {
                                 " and student.id = ec.submittedBy \n" +
                                 " and student.id = p.accountId \n" +
                                 " and ac.coordinator = cp.accountId \n" +
-                                " and student.faculty = f.id";
+                                " and student.faculty = f.id order by ec.submitted_date desc";
                 if(faculty != 0) {
                     sqlQuery += " and f.id = "+ faculty;
                 }

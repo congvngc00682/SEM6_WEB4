@@ -20,17 +20,10 @@
         <script type="text/javascript">
 
             function validateForm() {
-//                if (!validateRequiredField()) {
-//                    document.getElementById("alert").innerHTML = "Please fill in required fields marked with *";
-//                    return false;
-//                } else if (!validateEmail(email)) {
-//                    document.getElementById("alert").innerHTML = "Invalid email format";
-//                    return false;
-//                }
-//                else if (!ComparePassword()) {
-//                    document.getElementById("alert").innerHTML = "New Password and Retype Password not match";
-//                    return false;
-//                }
+                if (!validateRequiredField()) {
+                    document.getElementById("alert").innerHTML = "Please fill in required fields marked with *";
+                    return false;
+                }
 
                 document.getElementById("alert").innerHTML = "";
                 document.getElementById("LoginForm").submit();
@@ -38,15 +31,13 @@
             }
 
             function validateRequiredField() {
-                var email = document.getElementById("uname").value;
-                var password = document.getElementById("pws").value;
-                if ((!email || !password)) {
+                var uname = document.getElementById("uname").value;
+                var password = document.getElementById("psw").value;
+                if ((!uname || !password)) {
                     return false;
                 }
                 return true;
             }
-
-           
         </script>
     </head>
     <body>
@@ -59,23 +50,20 @@
                         <div class="imgcontainer">
                             <img src="images/img_avatar2.png" alt="Avatar" class="avatar">
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label" style="text-align: left; margin-top: 15px">Username:*</label>
                             <div class="col-sm-10">
-                                <input type="text" placeholder="example@email.com" name="uname" id="uname" class="form-control" required="true">
+                                <input type="text" placeholder="" name="uname" id="uname" class="form-control" required="true">
                             </div>
                         </div>
-
                         <div class="form-group">
                             <label class="col-sm-2 control-label" style="text-align: left; margin-top: 15px">Password:*</label>
                             <div class="col-sm-10">
-                                <input type="password" id="psw" name="psw" placeholder="Old Password:" class="form-control" required="true">
+                                <input type="password" id="psw" name="psw" placeholder="" class="form-control" required="true">
                             </div>
                         </div>
-
-                        <label id="alert" style="color: red"></label><br>
-                        <button type="submit" >Login</button>
+                        <label id="alert" class="col-sm-2 control-label" style="text-align: left; margin-top: 15px;color: red"></label><br>
+                        <button type="button" onclick="validateForm()">Login</button>
                         <a href="ChangePassword.jsp">Change password</a>
                         <span class="psw">Forgot <a href="ResetPassword.jsp">password?</a></span>
                     </form>

@@ -17,10 +17,32 @@
         <link href="css/plugins/morris.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        
+
+        <script type="text/javascript">
+            function validateForm() {
+                var email = document.getElementById("email").value;
+                if (!email) {
+                    document.getElementById("alert").innerHTML = "Please enter email";
+                    return false;
+                } else if (!validateEmail(email)) {
+                    document.getElementById("alert").innerHTML = "Invalid email format";
+                    return false;
+                }
+
+                document.getElementById("alert").innerHTML = "";
+                document.getElementById("ResetForm").submit();
+                return true;
+            }
+
+            function validateEmail() {
+                var email = document.getElementById("email").value;
+                var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                return email_regex.test(email);
+            }
+        </script>
     </head>
     <body>
-        
+
         <div id="page-wrapper">
             <div class="container-fluid">
                 <!-- Page Heading -->
@@ -36,10 +58,11 @@
                             <div class="col-sm-10">
                                 <input type="text" placeholder="example@email.com" name="email" id="email" class="form-control" required="true">
                             </div>
+                            <label class="col-sm-2 control-label" style="text-align: left; margin-top: 15px;color: red" id="alert"></label><br>
                         </div>
 
-                        <label id="alert" style="color: red"></label><br>
                         <button type="button" onclick="return validateForm();">Submit</button>
+                        <a href="Login.jsp">Back</a>
                     </form>
                 </div>
                 <!-- /.row -->
@@ -47,6 +70,6 @@
             </div>
             <!-- /#page-wrapper -->
         </div>
-        
+
     </body>
 </html>

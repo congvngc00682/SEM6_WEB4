@@ -84,7 +84,7 @@
                         <li class="active">
                             <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                         </li>
-                        <c:if test="${sessionScope.account.username eq 4}">
+                        <c:if test="${sessionScope.account.role eq 4}">
                         <li>
                             <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
                         </li>
@@ -106,9 +106,9 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h1 class="page-header">
+                            <h4 class="page-header">
                                 Extenuating Circumstance Detail
-                            </h1>
+                            </h4>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -160,7 +160,7 @@
                                     </c:if>
                                     <c:if test="${not empty evidences}">
                                         <c:forEach items="${evidences}" var="evidence" varStatus="loop">
-                                            <a class="btn btn-primary" href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
+                                            <a href="DownloadEvidence?filepath=${evidence.files}">Evidence ${loop.index + 1}</a>
                                             <br>
                                         </c:forEach>
                                     </c:if>
@@ -171,11 +171,11 @@
                             <div class="form-group">
                                 <c:if test="${role eq 3 && ec.process_status eq 'submitted'}">
                                     <div class="col-sm-10 col-sm-offset-2">
-                                        <button type="button" onclick="processEC('accept',${ec.id})">Accept</button>
-                                        <button type="button" onclick="processEC('reject',${ec.id})">Reject</button>
+                                        <a class="btn btn-primary" onclick="processEC('accept',${ec.id})">Accept</a>
+                                        <a class="btn btn-primary" onclick="processEC('reject',${ec.id})">Reject</a>
                                     </div>
                                 </c:if>
-                                <c:if test="${role eq 4}">
+                                <c:if test="${role eq 4 && ec.process_status eq 'submitted'}">
                                     <a href="ViewEC?id=${ec.id}&role=4&action=edit" class="btn btn-primary">Edit</a>
                                         <a class="btn btn-primary" href="Dashboard">Back</a>
                                     

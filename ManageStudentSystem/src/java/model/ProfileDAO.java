@@ -12,7 +12,7 @@ import java.sql.Statement;
 import entities.Profile;
 
 /**
- * @author f87
+ * @author CuongDH
  *
  */
 public class ProfileDAO {

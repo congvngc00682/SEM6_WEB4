@@ -3,7 +3,6 @@
  */
 package model;
 
-import entities.Account;
 import entities.AssginedCoordinator;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +11,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import entities.ExtenuatingCircumstance;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import static java.time.temporal.TemporalQueries.localDate;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.commons.lang3.StringUtils;
@@ -238,7 +234,7 @@ public class ExtenuatingCircumstanceDAO {
 		return ec;
 	}
 
-        public static ExtenuatingCircumstance insertEC(ExtenuatingCircumstance ec) throws SQLException {
+        public ExtenuatingCircumstance insertEC(ExtenuatingCircumstance ec) throws SQLException {
 		String sqlQuery = "insert into ExtenuatingCircumstance values(?,?,?,?,?,?)";
 
 		Connection connection = new DataProcess().getConnection();
@@ -266,7 +262,7 @@ public class ExtenuatingCircumstanceDAO {
 		return ec;
 	}
         
-         public static AssginedCoordinator insertAssignedCoordinator(AssginedCoordinator coordinator) throws SQLException {
+         public AssginedCoordinator insertAssignedCoordinator(AssginedCoordinator coordinator) throws SQLException {
 		String sqlQuery = "insert into AssignedCoordinator(ec_Id, coordinator) values(?,?)";
 
 		Connection connection = new DataProcess().getConnection();
@@ -290,9 +286,10 @@ public class ExtenuatingCircumstanceDAO {
 		return coordinator;
 	}
         
-        public static void updateEC(ExtenuatingCircumstance ec, String updatedBy) throws SQLException {
+        public void updateEC(ExtenuatingCircumstance ec, String updatedBy) throws SQLException {
 		String sqlQuery = "update ExtenuatingCircumstance set title='" + ec.getTitle() +
                         "', description='" + ec.getDescription() +"' where id=" + ec.getId();
+                
                 if(StringUtils.equals("coordinator", updatedBy) || StringUtils.equals("admin", updatedBy)) {
                     sqlQuery = "update ExtenuatingCircumstance set process_status='" + ec.getProcess_status()+
                             "', processed_date='"+ ec.getProcessedDate()+"' where id=" + ec.getId();
@@ -318,22 +315,27 @@ public class ExtenuatingCircumstanceDAO {
 //		return ec;
 	}
         
-        public static void updateECProcess(ExtenuatingCircumstance ec, String updatedBy) throws SQLException {
-		String sqlQuery = "update AssignedCoordinator set title=" + ec.getTitle() +
-                        " description=" + ec.getDescription() +" where id=" + ec.getId();
-                if(StringUtils.equals("coordinator", updatedBy) || StringUtils.equals("admin", updatedBy)) {
-                    sqlQuery = "update ExtenuatingCircumstance process_status = " + ec.getProcess_status()+
-                            " processed_date =" + ec.getProcessedDate()+ " where id=" + ec.getId();
-                } 
+        public void disableEC() throws SQLException {
+		String sqlQuery = "update ExtenuatingCircumstance\n" +
+                            "set process_status = 'disabled'\n" +
+                            "where process_status = 'submitted' \n" +
+                            "and  DATEDIFF(day,getdate(),submitted_date) = -14";
+                
                 System.out.println("Sql: " + sqlQuery);
         
 		Connection connection = new DataProcess().getConnection();
 		PreparedStatement statement = connection.prepareStatement(sqlQuery, Statement.RETURN_GENERATED_KEYS);
 
-		statement.executeUpdate();
+		int affectedRows = statement.executeUpdate();
+
+		if (affectedRows == 0) {
+                    System.out.println("no rows affected.");
+		} else {
+                    System.out.println(affectedRows + " rows affected.");
+                }
 	}
          
-	public static void main(String[] args) {
+	public void main(String[] args) {
             try {
                 ExtenuatingCircumstance ec = new ExtenuatingCircumstance();
                 ec.setTitle(("title"));

@@ -21,7 +21,7 @@ import utils.WsadUtils;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "ProcessEC", urlPatterns = {"/ProcessEC"})
 public class ProcessEC extends HttpServlet {

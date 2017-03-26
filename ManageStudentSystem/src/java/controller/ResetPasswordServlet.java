@@ -23,7 +23,7 @@ import utils.WsadUtils;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "ResetPasswordServlet", urlPatterns = {"/ResetPassword"})
 public class ResetPasswordServlet extends HttpServlet {

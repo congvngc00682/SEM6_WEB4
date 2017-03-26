@@ -29,7 +29,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "ServerValidation", urlPatterns = {"/ServerValidation"})
 public class ServerValidation extends HttpServlet {

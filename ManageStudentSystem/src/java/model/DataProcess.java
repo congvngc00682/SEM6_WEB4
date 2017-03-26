@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author power
+ * @author Cong
  */
 public class DataProcess {
 

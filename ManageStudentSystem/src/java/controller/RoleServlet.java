@@ -23,7 +23,7 @@ import model.RoleDAO;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "RoleServlet", urlPatterns = {"/prepare"})
 public class RoleServlet extends HttpServlet {

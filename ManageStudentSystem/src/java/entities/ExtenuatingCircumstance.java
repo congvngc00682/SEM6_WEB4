@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *
- * @author power
+ * @author Cong
  */
 public class ExtenuatingCircumstance {
     private int id;

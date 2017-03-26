@@ -7,7 +7,7 @@ package entities;
 
 /**
  *
- * @author power
+ * @author Cong
  */
 public class Evidence {
     private int id;

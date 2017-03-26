@@ -1,7 +1,7 @@
 <%-- 
     Document   : error
     Created on : Feb 28, 2017, 3:09:50 PM
-    Author     : power
+    Author     : Cong
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>

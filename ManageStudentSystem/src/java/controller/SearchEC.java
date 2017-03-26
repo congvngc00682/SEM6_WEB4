@@ -24,7 +24,7 @@ import model.ExtenuatingCircumstanceDAO;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "SearchEC", urlPatterns = {"/SearchEC"})
 public class SearchEC extends HttpServlet {

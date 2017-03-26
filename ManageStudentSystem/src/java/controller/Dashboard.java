@@ -19,7 +19,7 @@ import model.ExtenuatingCircumstanceDAO;
 
 /**
  *
- * @author f87
+ * @author CuongDH
  */
 @WebServlet(name = "Dashboard", urlPatterns = {"/Dashboard"})
 public class Dashboard extends HttpServlet {

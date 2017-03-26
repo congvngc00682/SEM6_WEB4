@@ -33,7 +33,7 @@ import org.apache.commons.fileupload.servlet.ServletFileUpload;
 
 /**
  *
- * @author power
+ * @author Cong
  */
 @WebServlet(name = "UploadFile", urlPatterns = {"/UploadFile"})
 public class UploadFile extends HttpServlet {

@@ -1,4 +1,4 @@
---drop database ManageStudent
+--drop database ManageStudentEC
 Create database ManageStudentEC
 go
 
@@ -55,11 +55,12 @@ create table ExtenuatingCircumstance
 	submitted_date datetime not null,
 	process_status varchar(50),
 	processed_date datetime,
+	isActive bit default 0,
 	submittedBy int Foreign key references Account(id)
 )
 go
 --drop table Evidence
-
+go
 create table Evidence
 (
 	id int primary key identity(1,1) not null,

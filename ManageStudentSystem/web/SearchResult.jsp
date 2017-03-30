@@ -35,15 +35,13 @@
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
-
-
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
                             <h4 class="page-header">
-                                Dashboard
+                                Search Result
                             </h4>
                         </div>
                     </div>
@@ -54,15 +52,36 @@
                                 <form id="searchECForm" action="" method="POST">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
-                                            <tr><th>Title</th><th>Description</th><th>Status</th><th>Submitted Date</th><th>Submitted By</th><th>Assigned To</th><th>Active</th></tr>
-                                                    <c:forEach items="${ecs}" var="ec">
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Status</th>
+                                                <th>Submitted Date</th>
+                                                    <c:if test="${sessionScope.account.role ne 4}">
+                                                    <th>Submitted By</th>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.account.role ne 3}">
+                                                    <th>Assigned To</th>
+                                                    </c:if>
+                                                <th>Processed Date</th>
+                                                <th>Active</th>
+                                                    <c:if test="${sessionScope.account.role eq 4}">
+                                                    <th></th>
+                                                    </c:if>
+                                            </tr>
+                                            <c:forEach items="${ecs}" var="ec">
                                                 <tr>
-                                                    <td><a href="ViewEC?id=${ec.id}&role=2">${ec.title}</a></td>
+                                                    <td><a href="ViewEC?id=${ec.id}&role=${sessionScope.account.role}">${ec.title}</a></td>
                                                     <td>${ec.description}</td>
                                                     <td>${ec.process_status}</td>
                                                     <td>${ec.submitted_date}</td>
-                                                    <td>${ec.studentName}</td>
-                                                    <td>${ec.coordinatorName}</td>
+                                                    <c:if test="${sessionScope.account.role ne 4}">
+                                                        <td>${ec.studentName}</td>
+                                                    </c:if>
+                                                    <c:if test="${sessionScope.account.role ne 3}">
+                                                        <td>${ec.coordinatorName}</td>
+                                                    </c:if>
+                                                    <td>${ec.processedDate}</td>
                                                     <td>
                                                         <c:if test="${ec.isActive eq 'true'}">
                                                             Yes
@@ -71,6 +90,12 @@
                                                             No
                                                         </c:if> </p>
                                                     </td>
+                                                    <c:if test="${sessionScope.account.role eq 4}">
+                                                        <td><c:if test="${ec.process_status eq 'submitted' && ec.isActive eq true}">
+                                                                <a href="ViewEC?id=${ec.id}&role=4&action=edit"><i class="fa fa-fw fa-edit"></i>edit</a>
+                                                            </c:if>
+                                                        </td>
+                                                    </c:if>
                                                 </tr>
                                             </c:forEach>
                                         </table>

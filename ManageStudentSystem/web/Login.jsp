@@ -62,7 +62,7 @@
                                 <input type="password" id="psw" name="psw" placeholder="" class="form-control" required="true">
                             </div>
                         </div>
-                        <label id="alert" class="col-sm-2 control-label" style="text-align: left; margin-top: 15px;color: red"></label><br>
+                        <label id="alert" class="control-label" style="text-align: left; margin-top: 15px;color: red"></label><br>
                         <button type="button" onclick="validateForm()">Login</button>
                         <a href="ChangePassword.jsp">Change password</a>
                         <span class="psw">Forgot <a href="ResetPassword.jsp">password?</a></span>

@@ -6,6 +6,7 @@
 package entities;
 
 import java.util.List;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  *
@@ -17,6 +18,7 @@ public class ExtenuatingCircumstance {
     private String description;
     private String submitted_date;
     private String process_status;
+    private boolean isActive;
     private int account;
     private String processedDate;
     private int assignedCoordinatorId;
@@ -70,6 +72,11 @@ public class ExtenuatingCircumstance {
     }
 
     public String getSubmitted_date() {
+        if(StringUtils.isNotEmpty(submitted_date)){
+            if(submitted_date.indexOf(" ") > 0) {
+                return submitted_date.substring(0, submitted_date.indexOf(" "));
+            }
+        }
         return submitted_date;
     }
 
@@ -94,6 +101,11 @@ public class ExtenuatingCircumstance {
     }
     
     public String getProcessedDate() {
+        if(StringUtils.isNotEmpty(processedDate)){
+            if(processedDate.indexOf(" ") > 0) {
+                return processedDate.substring(0, processedDate.indexOf(" "));
+            }
+        }
         return processedDate;
     }
 
@@ -132,4 +144,11 @@ public class ExtenuatingCircumstance {
         this.extenuatingCircumstances = extenuatingCircumstances;
     }
     
+    public boolean isIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
 }

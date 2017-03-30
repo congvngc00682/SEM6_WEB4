@@ -19,7 +19,8 @@
         <link href="css/modelLogin.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <script>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        <script type="text/javascript">
             // Get the modal
             var modal = document.getElementById('id01');
 
@@ -30,6 +31,44 @@
                 }
             }
 
+            $(document).ready(function () {
+                $("#btnCreate").click(function () {
+                    var firstname = document.getElementById("firstname").value;
+                    var middlename = document.getElementById("middlename").value;
+                    var lastname = document.getElementById("lastname").value;
+                    var email = document.getElementById("email").value;
+                    var role = document.getElementById("role").value;
+                    var faculty = document.getElementById("faculty").value;
+                    var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+                    if ((!role || !faculty || !firstname || !lastname || !email)) {
+                        document.getElementById("emailError").innerHTML = "Please fill in required fields marked with *";
+                        return false;
+                    } else if (!email_regex.test(email)){
+                        document.getElementById("emailError").innerHTML = "Invalid email format";
+                        return false ;
+                    } else {
+                        console.log("calling ajax");
+                        $.ajax({
+                            url: 'ServerValidation?firstname=' + firstname + '&middlename=' + middlename + '&lastname=' + lastname + '&email=' + email,
+                            success: function (response) {
+                                console.log("response" + response);
+                                if (response === "profile") {
+                                                    document.getElementById("emailError").innerHTML = "This profile is aready existed";
+                                    return false;
+                                } else if (response === "email") {
+                                    document.getElementById("emailError").innerHTML = "This email is aready existed";
+                                    return false;
+                                } else {
+                                    document.getElementById("emailError").innerHTML = "";
+                                    $("#addNewAccountForm")[0].submit();
+                                }
+                            }
+                        });
+                        return false;
+                    } 
+                });
+            });
+
             function validateForm() {
                 //var test = serverValidation();
                 if (!validateRequiredField()) {
@@ -38,7 +77,7 @@
                 } else if (!validateEmail()) {
                     document.getElementById("emailError").innerHTML = "Invalid email format";
                     return false;
-                } 
+                }
 //                else if (!serverValidation()) {
 //                }
 
@@ -64,7 +103,7 @@
                 var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
                 return email_regex.test(email);
             }
-            
+
             function serverValidation() {
                 var firstname = document.getElementById("firstname").value;
                 var middlename = document.getElementById("middlename").value;
@@ -72,22 +111,21 @@
                 var email = document.getElementById("email").value;
                 console.log("calling ajax");
                 $.ajax({
-                        
-                        url: 'ServerValidation?firstname='+firstname+'&middlename='+middlename+'&lastname='+lastname+'&email='+email,
-                        success: function (response) {
-                            console.log("response" + response);
-                            if (response === "profile") {
-                                document.getElementById("emailError").innerHTML = "This profile is aready existed";
-                                return false;
-                            } else if(response === "email"){
-                                document.getElementById("emailError").innerHTML = "This email is aready existed";
-                                return false;
-                            } else {
-                                document.getElementById("emailError").innerHTML = "";
-                                return true;
-                            }
+                    url: 'ServerValidation?firstname=' + firstname + '&middlename=' + middlename + '&lastname=' + lastname + '&email=' + email,
+                    success: function (response) {
+                        console.log("response" + response);
+                        if (response === "profile") {
+                                            document.getElementById("emailError").innerHTML = "This profile is aready existed";
+                            return false;
+                        } else if (response === "email") {
+                            document.getElementById("emailError").innerHTML = "This email is aready existed";
+                            return false;
+                        } else {
+                            document.getElementById("emailError").innerHTML = "";
+                            return true;
                         }
-                    });
+                    }
+                });
             }
         </script>
     </head>
@@ -95,53 +133,10 @@
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="AdminManager.jsp">Administrator</a>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <jsp:include page="template/AccountMenu.jsp"/>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="AddNewAccount.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New Account</a>
-                        </li>
-                        <li>
-                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                        </li>
-                    </ul>
+                    <jsp:include page="template/LeftMenu.jsp"/>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
@@ -159,7 +154,7 @@
                     </div>
                     <!-- /.row -->
                     <div class="panel-body">
-                        <form method="POST" class="form-horizontal" role="form" action="AddNewAccount">
+                        <form method="POST" class="form-horizontal" role="form" action="AddNewAccount" id="addNewAccountForm">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" style="text-align: left">Role:*</label>
                                 <div class="col-sm-4">
@@ -213,7 +208,7 @@
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="button" class="btn btn-primary" onclick=" validateForm();">Create Account</button>
+                                    <button type="button" class="btn btn-primary" id="btnCreate">Create Account</button>
                                     <button type="reset" class="btn btn-primary" >Reset</button>
                                 </div>
                             </div>

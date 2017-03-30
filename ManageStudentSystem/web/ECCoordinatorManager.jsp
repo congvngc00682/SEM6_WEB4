@@ -28,52 +28,13 @@
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="Logout"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <jsp:include page="template/AccountMenu.jsp"/>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <li>
-                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                        </li>
-
-                    </ul>
+                    <jsp:include page="template/LeftMenu.jsp"/>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
-
-
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <!-- Page Heading -->
@@ -91,7 +52,7 @@
                                 <form id="searchECForm" action="" method="POST">
                                     <div class="table-responsive">
                                         <table class="table table-hover">
-                                            <tr><th>Title</th><th>Description</th><th>Status</th><th>Date</th><th>Submitted By</th></tr>
+                                            <tr><th>Title</th><th>Description</th><th>Status</th><th>Submitted Date</th><th>Submitted By</th><th>Active</th></tr>
                                                     <c:forEach items="${ecs}" var="ec">
                                                 <tr>
                                                     <td><a href="ViewEC?id=${ec.id}&role=3">${ec.title}</a></td>
@@ -99,6 +60,12 @@
                                                     <td>${ec.process_status}</td>
                                                     <td>${ec.submitted_date}</td>
                                                     <td>${ec.studentName}</td>
+                                                    <td><c:if test="${ec.isActive eq 'true'}">
+                                                            Yes
+                                                        </c:if>
+                                                        <c:if test="${ec.isActive eq 'false'}">
+                                                            No
+                                                        </c:if> </p></td>
                                                 </tr>
                                             </c:forEach>
 

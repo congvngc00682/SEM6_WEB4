@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ page session="true" %>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,7 +9,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Add New EC</title>
+        <title>Add New Account</title>
         <!-- Bootstrap Core CSS -->
         <link href="css/bootstrap.min.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -19,29 +19,8 @@
         <link href="css/modelLogin.css" rel="stylesheet">
         <!-- Custom Fonts -->
         <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-        <script>
-            // Get the modal
-            var modal = document.getElementById('id01');
-
-            // When the user clicks anywhere outside of the modal, close it
-            window.onclick = function (event) {
-                if (event.target == modal) {
-                    modal.style.display = "none";
-                }
-            }
-
-            function validateForm() {
-                var txtTitle = document.getElementById("txtTitle").value;
-                if (!txtTitle) {
-                    document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
-                    return false;
-                } 
-
-                document.getElementById("lblError").innerHTML = "";
-                document.getElementById("addNewECForm").submit();
-                return true;
-            }
-        </script>
+        <script src="js/jquery.js" type="text/javascript"></script>
+        
     </head>
     <body>
         <div id="wrapper">
@@ -61,55 +40,81 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4 class="page-header">
-                                Add New Extenuating Circumstance
-                            </h4>
+                            <h1 class="page-header">
+                                Search EC
+                            </h1>
                         </div>
                     </div>
                     <!-- /.row -->
                     <div class="panel-body">
-                        <form id="addNewECForm" action="AddNewEC" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
+                        <form id="searchECForm" action="SearchECNoAjax" method="POST" class="form-horizontal">
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" style="text-align: left">Title:*</label>
+                                <label class="col-sm-2 control-label" style="text-align: left">Faculty:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" name="title" id="txtTitle" class="form-control"/>
+                                    <select name="faculty" id="faculty" >
+                                        <option value="0" selected="true">---Select faculty---</option>
+                                        <option value="1">FPT</option>
+                                        <option value="2">Faculty 2</option>
+                                    </select>
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" style="text-align: left">Description:</label>
+                                <label class="col-sm-2 control-label" style="text-align: left">Title:</label>
                                 <div class="col-sm-4">
-                                    <textarea type="textarea" name="description" id="txtDescription" class="form-control" cols="22" rows="5" style="max-width: 335px">${ec.description}</textarea>
+                                    <input type="text" name="title" id="title" class="form-control" />
+                                </div>
+                            </div>
+                            
+                           <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Submitted By:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="studentName" id="studentName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Assigned To:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="coordinatorName" id="coordinatorName" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Submitted Date:</label>
+                                <div class="col-sm-4">
+                                    <input type="text" name="submittedDate" id="submittedDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Status:</label>
+                                <div class="col-sm-4">
+                                    <select name="status" id="status" >
+                                        <option value="">---Select status---</option>
+                                        <option value="submitted">submitted</option>
+                                        <option value="accepted">accepted</option>
+                                        <option value="rejected">rejected</option>
+                                    </select>
                                 </div>
                             </div>
                             
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" style="text-align: left">Evidence 1:</label>
-                                <div class="col-sm-4">
-                                    <input type="file" name="evidence1" id="evidence1" class="form-control">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-primary" id="btnSearch">Search</button>
+                                    <button type="reset" class="btn btn-primary">Reset</button>
                                 </div>
                             </div>
-                            
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label" style="text-align: left">Evidence 2:</label>
-                                <div class="col-sm-4">
-                                    <input type="file" name="evidence2" id="evidence2" class="form-control">
-                                </div>
-                            </div>
-                            
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">
-                                    <button type="submit" class="btn btn-primary" onclick="return validateForm();">Add New</button>
-                                    <button type="reset" class="btn btn-primary" onclick="resetError();">Reset</button>
+                                    <label id="emailError" style="color: red;"/>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-2">
-                                    <label id="lblError" style="color: red;"/>
-                                </div>
+                            
+                            <div id="tablediv">
+                                <table cellspacing="0" id="countrytable" class="table"> 
+                                </table>
                             </div>
+
                         </form>
                     </div>
                     <!-- /.row -->

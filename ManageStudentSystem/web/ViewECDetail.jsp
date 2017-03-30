@@ -31,16 +31,16 @@
             }
 
             function processEC(decision, ecId) {
-                
-                if(decision === 'accept'){
+
+                if (decision === 'accept') {
                     window.location.href = 'ProcessEC?decision=accepted&id=' + ecId;
                 } else {
                     var confirmRejection = confirm("Do you really want to reject this EC?");
-                    if(confirmRejection) {
+                    if (confirmRejection) {
                         window.location.href = 'ProcessEC?decision=rejected&id=' + ecId;
-                    } 
+                    }
                 }
-                
+
             }
         </script>
     </head>
@@ -48,54 +48,10 @@
         <div id="wrapper">
             <!-- Navigation -->
             <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <!-- Top Menu Items -->
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                       <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> ${sessionScope.account.username} <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-envelope"></i> Inbox</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-fw fa-gear"></i> Settings</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="Login.jsp"><i class="fa fa-fw fa-power-off"></i> Log Out</a>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
+                <jsp:include page="template/AccountMenu.jsp"/>
                 <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
                 <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="Dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                        </li>
-                        <c:if test="${sessionScope.account.role eq 4}">
-                        <li>
-                            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
-                        </li>
-                        </c:if>
-                        <li>
-                            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
-                        </li>
-                        <li>
-                            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-                        </li>
-                    </ul>
+                    <jsp:include page="template/LeftMenu.jsp"/>
                 </div>
                 <!-- /.navbar-collapse -->
             </nav>
@@ -106,9 +62,10 @@
                     <!-- Page Heading -->
                     <div class="row">
                         <div class="col-lg-12">
-                            <h4 class="page-header">
+                            <h4 class="page-header" style="float: left;">
                                 Extenuating Circumstance Detail
                             </h4>
+                            <a class="page-header" href="" onclick="window.history.go(-1)" style="float: right">Back</a>
                         </div>
                     </div>
                     <!-- /.row -->
@@ -137,9 +94,21 @@
                             </div>
 
                             <div class="form-group">
-                                <label class="col-sm-2 control-label" style="text-align: left">Status:</label>
+                                <label class="col-sm-2 control-label" style="text-align: left">Process Status:</label>
                                 <div class="col-sm-4">
                                     <p style="margin-top: 5px">${ec.process_status}</p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Active:</label>
+                                <div class="col-sm-4">
+                                    <p style="margin-top: 5px"> 
+                                        <c:if test="${ec.isActive eq 'true'}">
+                                            Yes
+                                        </c:if>
+                                        <c:if test="${ec.isActive eq 'false'}">
+                                            No
+                                        </c:if> </p>
                                 </div>
                             </div>
 
@@ -169,17 +138,19 @@
 
                             <!--check role to display button-->
                             <div class="form-group">
-                                <c:if test="${role eq 3 && ec.process_status eq 'submitted'}">
+                                <c:if test="${role eq 3 && ec.process_status eq 'submitted' && ec.isActive eq true}">
                                     <div class="col-sm-10 col-sm-offset-2">
                                         <a class="btn btn-primary" onclick="processEC('accept',${ec.id})">Accept</a>
                                         <a class="btn btn-primary" onclick="processEC('reject',${ec.id})">Reject</a>
                                     </div>
                                 </c:if>
-                                <c:if test="${role eq 4 && ec.process_status eq 'submitted'}">
-                                    <a href="ViewEC?id=${ec.id}&role=4&action=edit" class="btn btn-primary">Edit</a>
+                                <c:if test="${role eq 4 && ec.process_status eq 'submitted' && ec.isActive eq true}">
+                                    <div class="col-sm-10 col-sm-offset-2">
+                                        <a href="ViewEC?id=${ec.id}&role=4&action=edit" class="btn btn-primary">Edit</a>
                                         <a class="btn btn-primary" href="Dashboard">Back</a>
-                                    
+                                    </div>
                                 </c:if>
+
                             </div>
 
                             <div class="form-group">
@@ -187,7 +158,7 @@
                                     <label id="error" style="color: red;"/>
                                 </div>
                             </div>
-                            
+
                         </form>
 
                     </div>

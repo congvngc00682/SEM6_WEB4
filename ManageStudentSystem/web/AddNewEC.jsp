@@ -32,10 +32,11 @@
 
             function validateForm() {
                 var txtTitle = document.getElementById("txtTitle").value;
-                if (!txtTitle) {
+                var year = document.getElementById("year").value;
+                if (!txtTitle || !year) {
                     document.getElementById("lblError").innerHTML = "Please fill in required fields marked with *";
                     return false;
-                } 
+                }
 
                 document.getElementById("lblError").innerHTML = "";
                 document.getElementById("addNewECForm").submit();
@@ -69,35 +70,45 @@
                     <!-- /.row -->
                     <div class="panel-body">
                         <form id="addNewECForm" action="AddNewEC" class="form-horizontal" role="form" method="POST" enctype="multipart/form-data">
-
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label" style="text-align: left">Academic year:*</label>
+                                <div class="col-sm-4">
+                                    <select name="year" id="year" required="true">
+                                        <option value="">---Select year---</option>
+                                        <c:forEach items="${years}" var="year">
+                                            <option value="${year.id}">${year.yearName}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" style="text-align: left">Title:*</label>
                                 <div class="col-sm-4">
                                     <input type="text" name="title" id="txtTitle" class="form-control"/>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" style="text-align: left">Description:</label>
                                 <div class="col-sm-4">
                                     <textarea type="textarea" name="description" id="txtDescription" class="form-control" cols="22" rows="5" style="max-width: 335px">${ec.description}</textarea>
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" style="text-align: left">Evidence 1:</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="evidence1" id="evidence1" class="form-control">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label" style="text-align: left">Evidence 2:</label>
                                 <div class="col-sm-4">
                                     <input type="file" name="evidence2" id="evidence2" class="form-control">
                                 </div>
                             </div>
-                            
+
 
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-2">

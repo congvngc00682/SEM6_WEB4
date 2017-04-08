@@ -25,6 +25,7 @@ public class ExtenuatingCircumstance {
     private String coordinatorName;
     private String studentName;
     private int noOfEvidence;
+    private int academicYear;
 
     public String getStudentName() {
         return studentName;
@@ -150,5 +151,13 @@ public class ExtenuatingCircumstance {
 
     public void setIsActive(boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public int getAcademicYear() {
+        return academicYear;
+    }
+
+    public void setAcademicYear(int academicYear) {
+        this.academicYear = academicYear;
     }
 }

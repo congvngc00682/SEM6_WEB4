@@ -64,6 +64,7 @@ public class AddNewEC extends HttpServlet {
         ExtenuatingCircumstance ec = new ExtenuatingCircumstance();
         if (ServletFileUpload.isMultipartContent(request)) {
             try {
+                int year = 0;
                 String fname = StringUtils.EMPTY;
                 String title = StringUtils.EMPTY;
                 String desciption = StringUtils.EMPTY;
@@ -72,6 +73,9 @@ public class AddNewEC extends HttpServlet {
                 ArrayList<FileItem> files = new ArrayList<>();
                 for (FileItem item : multiparts) {
                     if (item.isFormField()) {
+                        if (item.getFieldName().equals("year")) {
+                            year = Integer.parseInt(item.getString());
+                        }
                         if (item.getFieldName().equals("title")) {
                             title = item.getString();
                         }
@@ -91,6 +95,7 @@ public class AddNewEC extends HttpServlet {
                 LocalDateTime now = WsadUtils.GetCurrentDatetime();
 
                 // insert EC
+                ec.setAcademicYear(year);
                 ec.setTitle(title);
                 ec.setDescription(desciption);
                 ec.setProcess_status("submitted");

@@ -44,7 +44,15 @@ create table [Profile]
 )
 
 go
+create table AcademicYear
+(
+	id int primary key,
+	year_name varchar(50) not null,
+	startDate datetime not null,
+	endDate datetime not null
+)
 
+go
 --drop table ExtenuatingCircumstance
 
 create table ExtenuatingCircumstance
@@ -55,7 +63,8 @@ create table ExtenuatingCircumstance
 	submitted_date datetime not null,
 	process_status varchar(50),
 	processed_date datetime,
-	isActive bit default 0,
+	isActive bit default 1,
+	academicYear int foreign key references AcademicYear(id),
 	submittedBy int Foreign key references Account(id)
 )
 go
@@ -89,9 +98,13 @@ insert into Account values('Admin', '123', 'wsadGroup@gmail.com', 1, 1);
 insert into Account values('ECManager', '123', 'manager@gmail.com', 2, 1);
 insert into Account values('ECCoordinator', '123', 'coordinator@gmail.com', 3, 1);
 insert into Account values('Student', '123', 'Student@fpt.edu.vn', 4, 1);
+insert into Account values('ECCoordinator2', '123', 'coordinator2@gmail.com', 3, 2);
 
 insert into [profile] values ('Admin', 'Admin', null, null, 1);
 insert into [profile] values ('EC', 'Manager', null, null, 2);
 insert into [profile] values ('EC', 'Coordinator', null, null, 3);
 insert into [profile] values ('Student', '1', null, null, 4);
+insert into [profile] values ('EC2', 'Coordinator2', null, null, 5);
 
+insert into AcademicYear values (1, '2015/2016', '2015/07/01', '2016/06/30');
+insert into AcademicYear values (2, '2016/2017', '2016/07/01', '2017/06/30');

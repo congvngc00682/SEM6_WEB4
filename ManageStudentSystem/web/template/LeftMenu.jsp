@@ -8,7 +8,7 @@
     </li>
     <c:if test="${sessionScope.account.role eq 4}">
         <li>
-            <a href="AddNewEC.jsp"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
+            <a href="PrepareToAddEc"><i class="fa fa-fw fa-plus-circle"></i> Add New EC</a>
         </li>
     </c:if>
     <c:if test="${sessionScope.account.role eq 1}">
@@ -22,12 +22,8 @@
             <a href="prepareSearch"><i class="fa fa-fw fa-search"></i> Search EC</a>
         </li>
         <li>
-            <a href="charts.html"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
+            <a href="PrepareForReport"><i class="fa fa-fw fa-bar-chart-o"></i> Report</a>
         </li>
-        <li>
-            <a href="tables.html"><i class="fa fa-fw fa-table"></i> Tables</a>
-        </li>
-        
     </c:if>
 
 </ul>
